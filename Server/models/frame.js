@@ -6,18 +6,7 @@ const FrameSchema = new Schema({
     type: String,
     required: true,
   },
-  color: {
-    type: String,
-    required: true,
-  },
-  window: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
+  //image
 });
 
 module.exports = mongoose.model('Frame', FrameSchema);
