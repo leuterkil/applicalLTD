@@ -17,7 +17,6 @@ module.exports.addNewAdmin = async (req, res, next) => {
 };
 
 module.exports.login = (req, res) => {
-  req.flash('success', 'welcome back!');
   const redirectUrl = req.session.returnTo || '/';
   delete req.session.returnTo;
   res.send('log in');
