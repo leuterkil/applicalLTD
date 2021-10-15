@@ -10,8 +10,8 @@ module.exports.addNewCustomer = async (req, res, next) => {
     res.send(e);
   }
 };
-module.exports.findCustomerById = (req, res, next) => {
-  Customer.findById(req.params.uid, (err, Customer) => {
+module.exports.findCustomerById = async (req, res, next) => {
+  await Customer.findById(req.params.uid, (err, Customer) => {
     if (err) {
       res.send(err);
     } else {
@@ -19,12 +19,25 @@ module.exports.findCustomerById = (req, res, next) => {
     }
   });
 };
-module.exports.deleteCustomerById = (req, res, next) => {
-  Customer.findOneAndDelete(req.params.uid, (err, Customer) => {
+module.exports.deleteCustomerById = async (req, res, next) => {
+  await Customer.findOneAndDelete(req.params.uid, (err, Customer) => {
     if (err) {
       res.send(err);
     } else {
       res.json(Customer);
     }
   });
+};
+module.exports.UpdateCustomerById = async (req, res, next) => {
+  await Customer.findOneAndUpdate(
+    req.params.uid,
+    { ...req.body },
+    (err, Customer) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.json(Customer);
+      }
+    }
+  );
 };
