@@ -11,7 +11,7 @@ module.exports.addNewCustomer = async (req, res, next) => {
   }
 };
 module.exports.findCustomerById = async (req, res, next) => {
-  await Customer.findById(req.params.uid, (err, Customer) => {
+  await Customer.findById(req.params.cid, (err, Customer) => {
     if (err) {
       res.send(err);
     } else {
@@ -20,7 +20,7 @@ module.exports.findCustomerById = async (req, res, next) => {
   });
 };
 module.exports.deleteCustomerById = async (req, res, next) => {
-  await Customer.findOneAndDelete(req.params.uid, (err, Customer) => {
+  await Customer.findOneAndDelete(req.params.cid, (err, Customer) => {
     if (err) {
       res.send(err);
     } else {
@@ -30,7 +30,7 @@ module.exports.deleteCustomerById = async (req, res, next) => {
 };
 module.exports.UpdateCustomerById = async (req, res, next) => {
   await Customer.findOneAndUpdate(
-    req.params.uid,
+    req.params.cid,
     { ...req.body },
     (err, Customer) => {
       if (err) {

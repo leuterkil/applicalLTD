@@ -6,7 +6,7 @@ const session = require('express-session');
 // const flash = require('connect-flash');
 const path = require('path');
 const adminRoutes = require('./routes/admins');
-// const postRoutes = require('./routes/posts');
+const customerRoutes = require('./routes/customers');
 // const stationRoutes = require('./routes/stations');
 const mongoose = require('mongoose');
 const ExpressError = require('./utils/ExpressError');
@@ -86,7 +86,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use('/', adminRoutes);
-// app.use('/', postRoutes);
+app.use('/customer', customerRoutes);
 // app.use('/station', stationRoutes);
 
 app.get('/', (req, res) => {
