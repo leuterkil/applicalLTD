@@ -7,7 +7,7 @@ const session = require('express-session');
 const path = require('path');
 const adminRoutes = require('./routes/admins');
 const customerRoutes = require('./routes/customers');
-// const stationRoutes = require('./routes/stations');
+const frameRoutes = require('./routes/frames');
 const mongoose = require('mongoose');
 const ExpressError = require('./utils/ExpressError');
 const User = require('./models/user');
@@ -87,6 +87,7 @@ app.use((req, res, next) => {
 });
 app.use('/', adminRoutes);
 app.use('/customer', customerRoutes);
+app.use('/frame', frameRoutes);
 // app.use('/station', stationRoutes);
 
 app.get('/', (req, res) => {
