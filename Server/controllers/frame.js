@@ -3,7 +3,7 @@ const Frame = require('../models/frame');
 module.exports.addNewFrame = async (req, res, next) => {
   try {
     const { typeOfFrame } = req.body;
-    const frame = new Frame(typeOfFrame);
+    const frame = new Frame({ typeOfFrame });
     await frame.save();
     res.json(frame);
   } catch (e) {

@@ -2,9 +2,9 @@ const Order = require('../models/order');
 
 module.exports.newOrder = async (req, res, next) => {
   try {
-    const { orderDate, address, notes } = req.body;
+    const { orderDate, address, notes, customer } = req.body;
     const { content } = req.body.content;
-    const order = new Order(orderDate, address, notes);
+    const order = new Order({ orderDate, address, notes, customer });
     order.content = content.map((detail) => ({
       frameHeight: detail.frameHeight,
       frameLength: detail.frameLength,

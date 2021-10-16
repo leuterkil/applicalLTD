@@ -3,7 +3,7 @@ const Customer = require('../models/customer');
 module.exports.addNewCustomer = async (req, res, next) => {
   try {
     const { firstName, lastName, email, phone } = req.body;
-    const customer = new Customer(firstName, lastName, phone, email);
+    const customer = new Customer({ firstName, lastName, phone, email });
     await customer.save();
     res.json(customer);
   } catch (e) {

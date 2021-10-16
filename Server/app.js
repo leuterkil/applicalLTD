@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 const express = require('express');
 const methodOverride = require('method-override');
 const passport = require('passport');
@@ -10,7 +13,7 @@ const customerRoutes = require('./routes/customers');
 const frameRoutes = require('./routes/frames');
 const mongoose = require('mongoose');
 const ExpressError = require('./utils/ExpressError');
-const User = require('./models/user');
+const Admin = require('./models/admin');
 const mongoSanitize = require('express-mongo-sanitize');
 const cors = require('cors');
 
@@ -19,7 +22,7 @@ const PORT = 4000;
 
 //const MongoDBStore = new connectMongo(session);
 
-const dbUrl = proccess.env.MONGO_URL | 'mongodb://localhost:27017/applicalLTD';
+const dbUrl = 'mongodb://localhost:27017/applicalLTD';
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -74,10 +77,10 @@ app.use(session(sessionConfig));
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(new LocalStrategy(Admin.authenticate()));
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(Admin.serializeUser());
+passport.deserializeUser(Admin.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
