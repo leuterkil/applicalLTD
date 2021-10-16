@@ -5,7 +5,7 @@ const LocalStrategy = require('passport-local');
 const session = require('express-session');
 // const flash = require('connect-flash');
 const path = require('path');
-// const userRoutes = require('./routes/users');
+const adminRoutes = require('./routes/admins');
 // const postRoutes = require('./routes/posts');
 // const stationRoutes = require('./routes/stations');
 const mongoose = require('mongoose');
@@ -85,7 +85,7 @@ app.use((req, res, next) => {
   //   res.locals.error = req.flash('error');
   next();
 });
-// app.use('/', userRoutes);
+app.use('/', adminRoutes);
 // app.use('/', postRoutes);
 // app.use('/station', stationRoutes);
 
