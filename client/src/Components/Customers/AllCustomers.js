@@ -16,6 +16,7 @@ class AllCustomers extends React.Component {
   render() {
     return (
       <>
+        <Link to="/customers/new">Νέος Πελάτης</Link>
         <ul>
           {this.state.customers.map((customer, index) => (
             <Link key={index} to={`/customers/${customer._id}`}>

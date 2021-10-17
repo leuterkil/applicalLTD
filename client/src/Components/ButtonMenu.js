@@ -4,6 +4,7 @@ import FramesMenu from './Frames/FramesMenu';
 import OrdersMenu from './Orders/OrdersMenu';
 import Customer from './Customers/Customer';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import NewCustomer from './Customers/NewCustomer';
 
 class ButtonMenu extends React.Component {
   constructor(props) {
@@ -19,6 +20,9 @@ class ButtonMenu extends React.Component {
           <Link to="/orders">Παραγγελίες</Link>
 
           <Switch>
+            <Route path="/customers/new">
+              <NewCustomer />
+            </Route>
             <Route path="/customers/:cid">
               <Customer />
             </Route>

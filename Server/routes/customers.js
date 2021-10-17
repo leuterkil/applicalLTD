@@ -4,7 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const customer = require('../controllers/customer');
 const { isLoggedIn } = require('../middleware');
 
-router.route('/new').post(isLoggedIn, catchAsync(customer.addNewCustomer));
+router.route('/new').post(/*isLoggedIn,*/ catchAsync(customer.addNewCustomer));
 router.route('/all').get(catchAsync(customer.findAllCustomers));
 router
   .route('/:cid')
