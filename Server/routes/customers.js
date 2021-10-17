@@ -10,6 +10,6 @@ router
   .route('/:cid')
   .delete(isLoggedIn, catchAsync(customer.deleteCustomerById))
   .put(isLoggedIn, catchAsync(customer.UpdateCustomerById))
-  .get(isLoggedIn, catchAsync(customer.findCustomerById));
+  .get(/*isLoggedIn,*/ catchAsync(customer.findCustomerById));
 
 module.exports = router;

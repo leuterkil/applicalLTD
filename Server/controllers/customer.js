@@ -11,13 +11,8 @@ module.exports.addNewCustomer = async (req, res, next) => {
   }
 };
 module.exports.findCustomerById = async (req, res, next) => {
-  await Customer.findById(req.params.cid, (err, Customer) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.json(Customer);
-    }
-  });
+  const customer = await Customer.findById(req.params.cid);
+  res.json(customer);
 };
 
 module.exports.findAllCustomers = async (req, res, next) => {

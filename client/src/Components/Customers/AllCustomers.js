@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 const axios = require('axios');
 
 class AllCustomers extends React.Component {
@@ -15,12 +16,13 @@ class AllCustomers extends React.Component {
   render() {
     return (
       <>
-        <h2>Λίστα Πελατών</h2>
         <ul>
-          {this.state.customers.map((customer) => (
-            <li>
-              {customer.firstName} {customer.lastName}
-            </li>
+          {this.state.customers.map((customer, index) => (
+            <Link key={index} to={`/customers/${customer._id}`}>
+              <li key={index}>
+                {customer.firstName} {customer.lastName}
+              </li>
+            </Link>
           ))}
         </ul>
       </>

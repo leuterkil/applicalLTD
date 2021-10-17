@@ -1,5 +1,4 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import AllCustomers from './AllCustomers';
 
 class CustomersMenu extends React.Component {
@@ -10,16 +9,8 @@ class CustomersMenu extends React.Component {
   render() {
     return (
       <>
-        <Router>
-          <Link to="/all">
-            <h2>Λίστα πελατών</h2>
-          </Link>
-          <Switch>
-            <Route path="/all">
-              <AllCustomers />
-            </Route>
-          </Switch>
-        </Router>
+        <h2>Λίστα Πελατών</h2>
+        <AllCustomers />
       </>
     );
   }
