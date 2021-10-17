@@ -48,6 +48,7 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 // });
 
 const app = express();
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
@@ -57,7 +58,7 @@ app.use(
     replaceWith: '_',
   })
 );
-app.use(cors());
+
 const sessionConfig = {
   // store,
   name: 'session',

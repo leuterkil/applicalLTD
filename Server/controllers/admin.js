@@ -31,7 +31,7 @@ module.exports.getAllAdmins = (req, res) => {
 };
 
 module.exports.getAdmin = (req, res) => {
-  Admin.findById(req.params.Uid, (err, Admin) => {
+  Admin.findById(req.params.uid, (err, Admin) => {
     if (err) {
       res.send(err);
     }
@@ -40,7 +40,7 @@ module.exports.getAdmin = (req, res) => {
 };
 
 module.exports.deleteAdmin = (req, res) => {
-  Admin.findOneAndDelete(req.params.Uid, (err, Admin) => {
+  Admin.findOneAndDelete(req.params.uid, (err, Admin) => {
     if (err) {
       res.send(err);
     }

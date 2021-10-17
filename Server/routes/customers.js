@@ -5,6 +5,7 @@ const customer = require('../controllers/customer');
 const { isLoggedIn } = require('../middleware');
 
 router.route('/new').post(isLoggedIn, catchAsync(customer.addNewCustomer));
+router.route('/all').get(catchAsync(customer.findAllCustomers));
 router
   .route('/:cid')
   .delete(isLoggedIn, catchAsync(customer.deleteCustomerById))

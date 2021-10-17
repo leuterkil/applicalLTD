@@ -19,6 +19,12 @@ module.exports.findCustomerById = async (req, res, next) => {
     }
   });
 };
+
+module.exports.findAllCustomers = async (req, res, next) => {
+  const costumers = await Customer.find({});
+  res.json(costumers);
+};
+
 module.exports.deleteCustomerById = async (req, res, next) => {
   await Customer.findOneAndDelete(req.params.cid, (err, Customer) => {
     if (err) {
