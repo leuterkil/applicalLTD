@@ -1,12 +1,19 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 const axios = require('axios');
 
-class NewCustomer extends React.Component {
+class EditCustomer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { firstName: '', lastName: '', email: '', phone: '' };
+    this.state = {
+      customer: [],
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+    };
   }
+
   onChange = (e) => {
     /*
       Because we named the inputs to match their
@@ -16,38 +23,38 @@ class NewCustomer extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
+  handleSubmit = (e, id) => {
+    e.preventDefault();
+    const cid = this.props.match.params.cid;
     axios
-      .post('http://localhost:4000/customer/new', {
+      .put(`http://localhost:4000/customer/${cid}`, {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         email: this.state.email,
         phone: this.state.phone,
       })
       .then((res) => {
-        console.log(res.data.errors);
-        this.setState({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-        });
-        alert('Success');
-        Array.from(document.querySelectorAll('input')).forEach(
-          (input) => (input.value = '')
-        );
-      })
-      .catch((e) => {
-        console.log(e);
+        this.setState({ customer: res.data });
       });
   };
+
+  componentDidMount() {
+    const cid = this.props.match.params.cid;
+    axios.get(`http://localhost:4000/customer/${cid}`).then((res) => {
+      this.setState({
+        firstName: res.data.firstName,
+        lastName: res.data.lastName,
+        email: res.data.email,
+        phone: res.data.phone,
+      });
+    });
+  }
 
   render() {
     return (
       <>
-        <h3>Εισάγετε Στοιχεία</h3>
-        <form onSubmit={this.handleSubmit}>
+        <h3>Επεξεργασία Πελάτη</h3>
+        <form onSubmit={(e) => this.handleSubmit(e)}>
           <label htmlFor="firstName">Όνομα</label>
           <input
             type="text"
@@ -87,4 +94,4 @@ class NewCustomer extends React.Component {
   }
 }
 
-export default NewCustomer;
+export default withRouter(EditCustomer);

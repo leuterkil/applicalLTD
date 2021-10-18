@@ -1,8 +1,12 @@
 import React from 'react';
 import CustomersMenu from './Customers/CustomersMenu';
 import FramesMenu from './Frames/FramesMenu';
+import Frame from './Frames/Frame';
+import EditFrame from './Frames/EditFrame';
+import NewFrame from './Frames/NewFrame';
 import OrdersMenu from './Orders/OrdersMenu';
 import Customer from './Customers/Customer';
+import EditCustomer from './Customers/EditCustomer';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import NewCustomer from './Customers/NewCustomer';
 
@@ -23,11 +27,24 @@ class ButtonMenu extends React.Component {
             <Route path="/customers/new">
               <NewCustomer />
             </Route>
+            <Route path="/customers/edit/:cid">
+              <EditCustomer />
+            </Route>
+
             <Route path="/customers/:cid">
               <Customer />
             </Route>
             <Route path="/customers">
               <CustomersMenu />
+            </Route>
+            <Route path="/frames/new">
+              <NewFrame />
+            </Route>
+            <Route path="/frames/edit/:fid">
+              <EditFrame />
+            </Route>
+            <Route path="/frames/:fid">
+              <Frame />
             </Route>
             <Route path="/frames">
               <FramesMenu />

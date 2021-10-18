@@ -4,11 +4,12 @@ const frame = require('../controllers/frame');
 const { isLoggedIn } = require('../middleware');
 const catchAsync = require('../utils/catchAsync');
 
-router.route('/new').post(isLoggedIn, catchAsync(frame.addNewFrame));
+router.route('/new').post(/*isLoggedIn,*/ catchAsync(frame.addNewFrame));
+router.route('/all').get(catchAsync(frame.findAllFrames));
 router
   .route('/:fid')
-  .delete(isLoggedIn, catchAsync(frame.deleteFrameById))
-  .put(isLoggedIn, catchAsync(frame.updateFrameById))
-  .get(isLoggedIn, catchAsync(frame.findFrameById));
+  .get(/*isLoggedIn,*/ catchAsync(frame.findFrame))
+  .delete(/*isLoggedIn,*/ catchAsync(frame.deleteFrame))
+  .put(/*isLoggedIn,*/ catchAsync(frame.updateFrame));
 
 module.exports = router;

@@ -11,6 +11,7 @@ const path = require('path');
 const adminRoutes = require('./routes/admins');
 const customerRoutes = require('./routes/customers');
 const frameRoutes = require('./routes/frames');
+const orderRoutes = require('./routes/orders');
 const mongoose = require('mongoose');
 const ExpressError = require('./utils/ExpressError');
 const Admin = require('./models/admin');
@@ -89,9 +90,9 @@ app.use((req, res, next) => {
   next();
 });
 app.use('/', adminRoutes);
-app.use('/customer', customerRoutes);
 app.use('/frame', frameRoutes);
-// app.use('/station', stationRoutes);
+app.use('/customer', customerRoutes);
+app.use('/order', orderRoutes);
 
 app.get('/', (req, res) => {
   res.send('hello');

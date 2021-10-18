@@ -8,8 +8,8 @@ router.route('/new').post(/*isLoggedIn,*/ catchAsync(customer.addNewCustomer));
 router.route('/all').get(catchAsync(customer.findAllCustomers));
 router
   .route('/:cid')
-  .delete(isLoggedIn, catchAsync(customer.deleteCustomerById))
-  .put(isLoggedIn, catchAsync(customer.UpdateCustomerById))
+  .delete(/*isLoggedIn,*/ catchAsync(customer.deleteCustomerById))
+  .put(/*isLoggedIn,*/ catchAsync(customer.UpdateCustomerById))
   .get(/*isLoggedIn,*/ catchAsync(customer.findCustomerById));
 
 module.exports = router;

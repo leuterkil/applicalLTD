@@ -1,6 +1,6 @@
 module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
-    res.send('error', 'You must be signed in first!');
+    res.json('error', 'You must be signed in first!');
   }
   next();
 };

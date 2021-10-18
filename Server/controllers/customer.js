@@ -21,24 +21,12 @@ module.exports.findAllCustomers = async (req, res, next) => {
 };
 
 module.exports.deleteCustomerById = async (req, res, next) => {
-  await Customer.findOneAndDelete(req.params.cid, (err, Customer) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.json(Customer);
-    }
-  });
+  const customer = await Customer.findOneAndDelete(req.params.cid);
+  res.json(customer);
 };
 module.exports.UpdateCustomerById = async (req, res, next) => {
-  await Customer.findOneAndUpdate(
-    req.params.cid,
-    { ...req.body },
-    (err, Customer) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.json(Customer);
-      }
-    }
-  );
+  const customer = await Customer.findOneAndUpdate(req.params.cid, {
+    ...req.body,
+  });
+  res.json(customer);
 };

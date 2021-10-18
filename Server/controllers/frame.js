@@ -11,27 +11,26 @@ module.exports.addNewFrame = async (req, res, next) => {
   }
 };
 
-module.exports.findFramebyId = async (req, res, next) => {
+module.exports.findFrame = async (req, res, next) => {
+  const frame = await Frame.findById(req.params.fid);
+  res.json(frame);
+};
+module.exports.findAllFrames = async (req, res, next) => {
+  const frames = await Frame.find({});
+  res.json(frames);
+};
+module.exports.deleteFrame = async (req, res, next) => {
   try {
-    const frame = await Frame.findById(req.params.fid);
+    const frame = await Frame.findOneAndDelete(req.params.fid);
     res.json(frame);
   } catch (e) {
     res.send(e);
   }
 };
 
-module.exports.deleteFramebyId = async (req, res, next) => {
+module.exports.updateFrame = async (req, res, next) => {
   try {
-    const frame = await Frame.findByIdAndDelete(req.params.fid);
-    res.json(frame);
-  } catch (e) {
-    res.send(e);
-  }
-};
-
-module.exports.updateFramebyId = async (req, res, next) => {
-  try {
-    const frame = await Frame.findByIdAndUpdate(req.params.fid, {
+    const frame = await Frame.findOneAndUpdate(req.params.fid, {
       ...req.body,
     });
     res.json(frame);
