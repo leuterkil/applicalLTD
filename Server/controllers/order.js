@@ -16,7 +16,9 @@ module.exports.AllOrders = async (req, res, next) => {
   res.json(orders);
 };
 module.exports.showOrder = async (req, res, next) => {
-  const order = await Order.findById(req.params.oid);
+  const order = await Order.findById(req.params.oid)
+    .populate('content.frameDesc')
+    .populate('customer');
   res.json(order);
 };
 

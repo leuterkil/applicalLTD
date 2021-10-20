@@ -26,7 +26,7 @@ const AddItem = ({
       value={frameLength}
       onChange={onChange}
     />
-    <select id="singleFrame" name="singleFrame" onChange={onChange}>
+    <select id="frameDesc" name="frameDesc" onChange={onChange}>
       {frame.map((item, index) => (
         <option key={index} value={item._id}>
           {item.typeOfFrame}
@@ -47,14 +47,20 @@ const AddItem = ({
   </div>
 );
 
+const Item = ({ item, index, onRemove }) => (
+  <li>
+    {item.frameHeight} * {item.frameLength} | {item.frameDesc} | {item.qty} |{' '}
+    {item.price} | συνολική τιμή : {item.qty * item.price}
+    <button type="button" onClick={(e) => onRemove(index)}>
+      Διαγραφή
+    </button>
+  </li>
+);
+
 const List = ({ list, onRemove }) => (
   <ol>
     {list.map((item, index) => (
-      <li key={index} id={index}>
-        {item.frameHeight} * {item.frameLength} | {item.singleFrame} |{' '}
-        {item.qty} | {item.price} | συνολική τιμή : {item.qty * item.price}
-        <button onClick={onRemove}>Διαγραφή</button>
-      </li>
+      <Item key={index} item={item} index={index} onRemove={onRemove} />
     ))}
   </ol>
 );
@@ -62,6 +68,7 @@ const List = ({ list, onRemove }) => (
 class NewOrder extends React.Component {
   constructor(props) {
     super(props);
+    this.handleRemove = this.handleRemove.bind(this);
     this.state = {
       customer: '',
       address: '',
@@ -70,7 +77,7 @@ class NewOrder extends React.Component {
       frameLength: '',
       qty: 0,
       price: 0,
-      singleFrame: '',
+      frameDesc: '',
       frame: [],
       contentList: [],
       allCustomers: [],
@@ -84,7 +91,7 @@ class NewOrder extends React.Component {
     */
     this.setState({ [e.target.name]: e.target.value });
     this.setState({
-      singleFrame: document.getElementById('singleFrame').value,
+      frameDesc: document.getElementById('frameDesc').value,
     });
   };
 
@@ -102,17 +109,25 @@ class NewOrder extends React.Component {
   }
 
   OnAddContent = () => {
-    const { frameHeight, frameLength, singleFrame, qty, price } = this.state;
+    const { frameHeight, frameLength, frameDesc, qty, price } = this.state;
     const newList = this.state.contentList.concat({
       frameHeight,
       frameLength,
-      singleFrame,
+      frameDesc,
       qty,
       price,
     });
 
     this.setState({ contentList: newList });
   };
+
+  handleRemove(i) {
+    console.log(`position ${i}`);
+    const newList2 = this.state.contentList.filter(
+      (item, index) => index !== i
+    );
+    this.setState({ contentList: newList2 });
+  }
 
   handleSubmit = (event) => {
     event.preventDefault();
@@ -184,7 +199,7 @@ class NewOrder extends React.Component {
             onChange={this.onChange}
             onAdd={this.OnAddContent}
           />
-          <List list={this.state.contentList} />
+          <List list={this.state.contentList} onRemove={this.handleRemove} />
           <button type="submit">Αποθήκευση</button>
         </form>
       </>
