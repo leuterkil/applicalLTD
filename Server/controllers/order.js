@@ -2,8 +2,24 @@ const Order = require('../models/order');
 
 module.exports.newOrder = async (req, res, next) => {
   try {
-    const { address, notes, customer, content } = req.body;
-    const order = new Order({ address, notes, customer, content });
+    const {
+      address,
+      notes,
+      customer,
+      content,
+      color,
+      windowOfFrame,
+      typeFrame,
+    } = req.body;
+    const order = new Order({
+      address,
+      notes,
+      customer,
+      content,
+      color,
+      windowOfFrame,
+      typeFrame,
+    });
     await order.save();
     res.json(order);
   } catch (e) {

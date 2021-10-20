@@ -7,6 +7,7 @@ import NewFrame from './Frames/NewFrame';
 import OrdersMenu from './Orders/OrdersMenu';
 import NewOrder from './Orders/NewOrder';
 import OrderDetails from './Orders/OrderDetails';
+import EditOrder from './Orders/EditOrder';
 import Customer from './Customers/Customer';
 import EditCustomer from './Customers/EditCustomer';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
@@ -54,9 +55,9 @@ class ButtonMenu extends React.Component {
             <Route path="/orders/new">
               <NewOrder />
             </Route>
-            {/* <Route path="/orders/edit/:oid">
+            <Route path="/orders/edit/:oid">
               <EditOrder />
-            </Route> */}
+            </Route>
             <Route path="/orders/:oid">
               <OrderDetails />
             </Route>

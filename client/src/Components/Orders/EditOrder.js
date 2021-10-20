@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 const axios = require('axios');
 
 const AddItem = ({
@@ -65,12 +65,15 @@ const List = ({ list, onRemove }) => (
   </ol>
 );
 
-class NewOrder extends React.Component {
+class EditOrder extends React.Component {
   constructor(props) {
     super(props);
+
     this.handleRemove = this.handleRemove.bind(this);
     this.state = {
+      customerObj: [],
       customer: '',
+      frameObj: [],
       address: '',
       notes: '',
       frameHeight: '',
@@ -87,11 +90,27 @@ class NewOrder extends React.Component {
       typeFrame: '',
     };
   }
+  OnAddContent = () => {
+    const { frameHeight, frameLength, frameDesc, qty, price } = this.state;
+    let total = 0;
+    const newList = this.state.contentList.concat({
+      frameHeight,
+      frameLength,
+      frameDesc,
+      qty,
+      price,
+    });
+    for (let content of newList) {
+      total = total + content.qty * content.price;
+    }
+    this.setState({ contentList: newList, total });
+  };
+
   onChange = (e) => {
     /*
       Because we named the inputs to match their
       corresponding values in state, it's
-      super easy to upd ate the state
+      super easy to update the state
     */
     this.setState({ [e.target.name]: e.target.value });
     this.setState({
@@ -102,7 +121,58 @@ class NewOrder extends React.Component {
     });
   };
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const oid = this.props.match.params.oid;
+    axios
+      .put(`http://localhost:4000/order/${oid}`, {
+        address: this.state.address,
+        content: this.state.contentList,
+        frameDesc: this.state.contentList.frameDesc,
+        notes: this.state.notes,
+        customer: this.state.customer,
+        color: this.state.color,
+        windowOfFrame: this.state.windowOfFrame,
+        typeFrame: this.state.typeFrame,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
+
+  handleRemove(i) {
+    let total = 0;
+    const newList2 = this.state.contentList.filter(
+      (item, index) => index !== i
+    );
+    for (let content of newList2) {
+      total = total + content.qty * content.price;
+    }
+    this.setState({ contentList: newList2, total });
+  }
+
   componentDidMount() {
+    const oid = this.props.match.params.oid;
+    let total = 0;
+    axios.get(`http://localhost:4000/order/${oid}`).then((res) => {
+      res.data.content.map((item) => {
+        item.frameDesc = item.frameDesc._id;
+      });
+      for (let content of res.data.content) {
+        total = total + content.qty * content.price;
+      }
+      this.setState({
+        address: res.data.address,
+        notes: res.data.notes,
+        customer: res.data.customer._id,
+        customerObj: res.data.customer,
+        contentList: res.data.content,
+        color: res.data.color,
+        windowOfFrame: res.data.windowOfFrame,
+        typeFrame: res.data.typeFrame,
+        total,
+      });
+    });
     axios.get('http://localhost:4000/customer/all').then((res) => {
       this.setState({
         allCustomers: res.data,
@@ -115,70 +185,10 @@ class NewOrder extends React.Component {
     });
   }
 
-  OnAddContent = () => {
-    const { frameHeight, frameLength, frameDesc, qty, price } = this.state;
-    let total = 0;
-    const newList = this.state.contentList.concat({
-      frameHeight,
-      frameLength,
-      frameDesc,
-      qty,
-      price,
-    });
-
-    for (let content of newList) {
-      total = total + content.qty * content.price;
-    }
-
-    this.setState({ contentList: newList, total });
-  };
-
-  handleRemove(i) {
-    console.log(`position ${i}`);
-    let total = 0;
-    const newList2 = this.state.contentList.filter(
-      (item, index) => index !== i
-    );
-    for (let content of newList2) {
-      total = total + content.qty * content.price;
-    }
-    this.setState({ contentList: newList2, total });
-  }
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    axios
-      .post('http://localhost:4000/order/new', {
-        address: this.state.address,
-        content: this.state.contentList,
-        notes: this.state.notes,
-        customer: this.state.customer,
-        color: this.state.color,
-        windowOfFrame: this.state.windowOfFrame,
-        typeFrame: this.state.typeFrame,
-      })
-      .then((res) => {
-        console.log(res);
-        this.setState({
-          address: '',
-          customer: '',
-          contentList: [],
-          notes: '',
-        });
-        alert('Success');
-        Array.from(document.querySelectorAll('input')).forEach(
-          (input) => (input.value = '')
-        );
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
   render() {
     return (
       <>
-        <h3>Εισάγετε Παραγγελία</h3>
+        <h3>Επεξεργασία Παραγγελίας</h3>
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="address">Διεύθυνση : </label>
           <input
@@ -190,7 +200,10 @@ class NewOrder extends React.Component {
           />
           <label htmlFor="customer">Πελάτης : </label>
           <select name="customer" id="customer" onChange={this.onChange}>
-            <option default>Επιλέξτε Πελάτη</option>
+            <option default value={this.state.customerObj._id}>
+              {this.state.customerObj.firstName}{' '}
+              {this.state.customerObj.lastName}
+            </option>
             {this.state.allCustomers.map((customer, index) => (
               <option
                 id={`cid${customer._id}`}
@@ -212,7 +225,7 @@ class NewOrder extends React.Component {
           <label htmlFor="windowOfFrame">Τζάμι : </label>
           <input
             type="text"
-            id="windowOfFrame"
+            id="windoOfFrame"
             name="windowOfFrame"
             value={this.state.windowOfFrame}
             onChange={this.onChange}
@@ -243,6 +256,7 @@ class NewOrder extends React.Component {
             onAdd={this.OnAddContent}
           />
           <List list={this.state.contentList} onRemove={this.handleRemove} />
+          <br />
           <b>Σύνολο Παραγγελίας : {this.state.total}</b>
           <button type="submit">Αποθήκευση</button>
         </form>
@@ -251,4 +265,4 @@ class NewOrder extends React.Component {
   }
 }
 
-export default NewOrder;
+export default withRouter(EditOrder);

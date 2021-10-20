@@ -22,6 +22,9 @@ const OrderSchema = new Schema({
     type: String,
     required: true,
   },
+  color: { type: String, required: true },
+  windowOfFrame: { type: String, required: true },
+  typeFrame: { type: String, required: true },
   customer: {
     type: Schema.Types.ObjectId,
     ref: 'Customer',
