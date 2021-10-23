@@ -1,0 +1,30 @@
+li {
+  list-style: none;
+  border: none;
+  background-color: #bbb;
+  filter: drop-shadow(0 0 0.75rem #999);
+}
+
+.list-link {
+  color: black;
+  text-decoration: none;
+  transition-duration: 0.25s;
+  border-bottom: none;
+}
+.list-link:hover {
+  color: #333;
+  transition-duration: 0.25s;
+  border-bottom: 3px solid #333;
+}
+
+.list-container {
+  background-color: #333;
+}
+
+.list-container li:nth-child(2n) {
+  background-color: #aaa;
+}
+
+.indexes {
+  padding-right: 2rem;
+}

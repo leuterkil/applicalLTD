@@ -1,4 +1,5 @@
 const Customer = require('../models/customer');
+const Order = require('../models/order');
 
 module.exports.addNewCustomer = async (req, res, next) => {
   try {
@@ -16,12 +17,16 @@ module.exports.findCustomerById = async (req, res, next) => {
 };
 
 module.exports.findAllCustomers = async (req, res, next) => {
-  const costumers = await Customer.find({});
+  const costumers = await Customer.find({}, null, {
+    sort: { firstName: 1 },
+  });
   res.json(costumers);
 };
 
 module.exports.deleteCustomerById = async (req, res, next) => {
   const customer = await Customer.findOneAndDelete(req.params.cid);
+  const orders = await Order.deleteMany({ customer: req.params.cid });
+
   res.json(customer);
 };
 module.exports.UpdateCustomerById = async (req, res, next) => {

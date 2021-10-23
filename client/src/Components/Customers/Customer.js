@@ -16,11 +16,29 @@ class Customer extends React.Component {
   render() {
     return (
       <>
-        <h3>Στοιχεία Πελάτη</h3>
-        <p>Όνομα : {this.state.customer.firstName}</p>
-        <p>Επίθετο : {this.state.customer.lastName} </p>
-        <p>E-mail : {this.state.customer.email} </p>
-        <p>Τηλέφωνο : {this.state.customer.phone} </p>
+        <h3 className="text-center">Στοιχεία Πελάτη</h3>
+        <div className="bg-dark text-white text-center">
+          <p className="display-5">
+            <i className="fas fa-id-card px-3"></i>
+            Ονοματεπώνυμο : {this.state.customer.firstName}{' '}
+            {this.state.customer.lastName}
+          </p>
+          <p className="lead">
+            <span className="px-3">
+              <i className="fas fa-envelope"></i> :{' '}
+              <a
+                className="text-white"
+                href={`mailto:${this.state.customer.email}`}
+              >
+                {this.state.customer.email}
+              </a>
+            </span>{' '}
+            <i className="fas fa-phone-square"></i> :{' '}
+            <a className="text-white" href={`tel:${this.state.customer.phone}`}>
+              {this.state.customer.phone}{' '}
+            </a>
+          </p>
+        </div>
       </>
     );
   }

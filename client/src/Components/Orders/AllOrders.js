@@ -35,20 +35,48 @@ class AllOrdersMenu extends React.Component {
   render() {
     return (
       <>
-        <Link to="/orders/new">Νέα Παραγγελία</Link>
-        <ul>
+        <div className="d-flex justify-content-end">
+          <Link className="btn btn-success" to="/orders/new">
+            Νέα Παραγγελία <i className="fas fa-plus"></i>
+          </Link>
+        </div>
+        <ul className="list-container py-2 px-2 my-3">
           {this.state.orders.map((order, index) => (
-            <li id={`oid${order._id}`} key={index}>
-              <Link key={index} to={`/orders/${order._id}`}>
-                {order.customer.firstName} {order.customer.lastName}{' '}
-              </Link>
-              {order.address} {this.state.dateOfOrder}
-              <button onClick={(e) => this.deleteOrder(order._id, e)}>
-                Διαγραφή
-              </button>
-              <button>
-                <Link to={`/orders/edit/${order._id}`}>Επεξεργασία</Link>
-              </button>
+            <li className="py-3" id={`oid${order._id}`} key={index}>
+              <div className="d-flex py-2">
+                <h3 className="col-6 px-3">
+                  <span className="indexes">{index + 1}</span>
+                  <Link
+                    className="list-link"
+                    key={index}
+                    to={`/orders/${order._id}`}
+                  >
+                    Πελάτης : {order.customer.firstName}{' '}
+                    {order.customer.lastName}{' '}
+                  </Link>
+                </h3>
+                <div className="d-flex col-6 justify-content-end px-3">
+                  <button
+                    className="btn btn-link"
+                    onClick={(e) => this.deleteOrder(order._id, e)}
+                  >
+                    <i className="fas fa-trash text-danger"></i>
+                  </button>
+                  <button className=" btn btn-link">
+                    <Link to={`/orders/edit/${order._id}`}>
+                      <i className="fa fa-pencil text-dark"></i>
+                    </Link>
+                  </button>
+                </div>
+              </div>
+              <i className="d-flex">
+                <div className="col-6 justify-content-start px-3">
+                  Διεύθυνση Παράδοσης : {order.address}
+                </div>{' '}
+                <div className="d-flex col-6 justify-content-end px-3">
+                  Ημ/νια Παραγγελίας : {this.state.dateOfOrder}{' '}
+                </div>
+              </i>
             </li>
           ))}
         </ul>

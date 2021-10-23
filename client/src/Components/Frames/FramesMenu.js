@@ -8,7 +8,7 @@ class FramesMenu extends React.Component {
   render() {
     return (
       <>
-        <h2>Λίστα Κουφωμάτων</h2>
+        <h2 className="text-center">Λίστα Κουφωμάτων</h2>
         <AllFrames />
       </>
     );

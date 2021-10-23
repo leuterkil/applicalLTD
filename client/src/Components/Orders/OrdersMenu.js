@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import AllOrdersMenu from './AllOrders';
 class OrdersMenu extends React.Component {
   constructor(props) {
@@ -9,7 +8,7 @@ class OrdersMenu extends React.Component {
   render() {
     return (
       <>
-        <h1>Λίστα Παραγγελιών</h1>
+        <h2 className="text-center">Λίστα Παραγγελιών</h2>
         <AllOrdersMenu />
       </>
     );

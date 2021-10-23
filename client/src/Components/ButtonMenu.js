@@ -13,6 +13,8 @@ import EditCustomer from './Customers/EditCustomer';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import NewCustomer from './Customers/NewCustomer';
 
+import './styles/ButtonMenu.css';
+
 class ButtonMenu extends React.Component {
   constructor(props) {
     super(props);
@@ -22,10 +24,20 @@ class ButtonMenu extends React.Component {
     return (
       <>
         <Router>
-          <Link to="/customers">Πελάτες</Link>
-          <Link to="/frames">Κουφώματα</Link>
-          <Link to="/orders">Παραγγελίες</Link>
-
+          <div className="menu-container d-flex justify-content-around my-4 px-2 py-2">
+            <Link
+              className="links btn btn-primary px-5 py-3 my-2"
+              to="/customers"
+            >
+              Πελάτες
+            </Link>
+            <Link className="links btn btn-primary px-5 py-3 my-2" to="/frames">
+              Κουφώματα
+            </Link>
+            <Link className="links btn btn-primary px-5 py-3 my-2" to="/orders">
+              Παραγγελίες
+            </Link>
+          </div>
           <Switch>
             <Route path="/customers/new">
               <NewCustomer />

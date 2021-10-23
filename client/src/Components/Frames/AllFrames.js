@@ -26,19 +26,41 @@ class AllFrames extends React.Component {
   render() {
     return (
       <>
-        <Link to="/frames/new">Νέο Κούφωμα</Link>
-        <ul>
+        <div className="d-flex justify-content-end">
+          <Link className="btn btn-success " to="/frames/new">
+            Νέο Κούφωμα <i className="fas fa-plus"></i>
+          </Link>
+        </div>
+        <ul className="list-container py-2 px-2 my-3">
           {this.state.frames.map((frame, index) => (
-            <li id={`fid${frame._id}`} key={index}>
-              <Link key={index} to={`/frames/${frame._id}`}>
-                {frame.typeOfFrame}
-              </Link>
-              <button onClick={(e) => this.deleteFrame(frame._id, e)}>
-                Διαγραφή
-              </button>
-              <button>
-                <Link to={`/frames/edit/${frame._id}`}>Επεξεργασία</Link>
-              </button>
+            <li
+              className="my-2 px-3 py-3 d-flex"
+              id={`fid${frame._id}`}
+              key={index}
+            >
+              <h3 className="col-6">
+                <span className="indexes">{index + 1}</span>
+                <Link
+                  className="list-link"
+                  key={index}
+                  to={`/frames/${frame._id}`}
+                >
+                  {frame.typeOfFrame}
+                </Link>
+              </h3>
+              <div className="d-flex justify-content-end col-6">
+                <button
+                  className="btn btn-link"
+                  onClick={(e) => this.deleteFrame(frame._id, e)}
+                >
+                  <i className="fas fa-trash text-danger"></i>
+                </button>
+                <button className="btn btn-link">
+                  <Link to={`/frames/edit/${frame._id}`}>
+                    <i className="fa fa-pencil text-black"></i>
+                  </Link>
+                </button>
+              </div>
             </li>
           ))}
         </ul>

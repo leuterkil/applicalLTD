@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import '../styles/public.css';
 const axios = require('axios');
 
 class AllCustomers extends React.Component {
@@ -26,21 +27,47 @@ class AllCustomers extends React.Component {
   render() {
     return (
       <>
-        <Link to="/customers/new">Νέος Πελάτης</Link>
-        <ul>
+        <div className="d-flex justify-content-end">
+          <Link
+            className="btn btn-success list-link text-white"
+            to="/customers/new"
+          >
+            Νέος Πελάτης <i className="fas fa-plus px-2"></i>
+          </Link>
+        </div>
+        <ul className="list-container py-2 px-2 my-3">
           {this.state.customers.map((customer, index) => (
-            <li id={`cid${customer._id}`} key={index}>
-              <Link key={index} to={`/customers/${customer._id}`}>
-                {customer.firstName} {customer.lastName}{' '}
-              </Link>
-              <button onClick={(e) => this.deleteCustomer(customer._id, e)}>
-                Διαγραφή πελάτη
-              </button>
-              <button>
-                <Link to={`/customers/edit/${customer._id}`}>
-                  Επεξεργασία πελάτη
+            <li
+              className="px-3 py-3 d-flex"
+              id={`cid${customer._id}`}
+              key={index}
+            >
+              <h3 className="col-6">
+                <span className="indexes">{index + 1}</span>
+                <Link
+                  className="list-link"
+                  key={index}
+                  to={`/customers/${customer._id}`}
+                >
+                  {customer.firstName} {customer.lastName}{' '}
                 </Link>
-              </button>
+              </h3>
+              <div className="d-flex justify-content-end col-6">
+                <button
+                  className="btn btn-link"
+                  onClick={(e) => this.deleteCustomer(customer._id, e)}
+                >
+                  <i className="fas fa-trash text-danger"></i>
+                </button>
+                <button className="btn btn-link">
+                  <Link
+                    className="list-link"
+                    to={`/customers/edit/${customer._id}`}
+                  >
+                    <i className="fa fa-pencil text-black"></i>
+                  </Link>
+                </button>
+              </div>
             </li>
           ))}
         </ul>

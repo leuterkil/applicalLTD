@@ -20,8 +20,10 @@ class Frame extends React.Component {
   render() {
     return (
       <>
-        <h3>Στοιχεία Κουφώματος</h3>
-        <p>Είδος : {this.state.frame.typeOfFrame}</p>
+        <h3 className="text-center">Στοιχεία Κουφώματος</h3>
+        <div className="text-center bg-dark text-white py-4">
+          <p className="display-5">Είδος : {this.state.frame.typeOfFrame}</p>
+        </div>
       </>
     );
   }

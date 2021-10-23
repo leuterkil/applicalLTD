@@ -9,7 +9,7 @@ class CustomersMenu extends React.Component {
   render() {
     return (
       <>
-        <h2>Λίστα Πελατών</h2>
+        <h2 className="text-center">Λίστα Πελατών</h2>
         <AllCustomers />
       </>
     );

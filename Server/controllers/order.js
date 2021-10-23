@@ -28,7 +28,9 @@ module.exports.newOrder = async (req, res, next) => {
 };
 
 module.exports.AllOrders = async (req, res, next) => {
-  const orders = await Order.find({}).populate('customer');
+  const orders = await Order.find({}, null, {
+    sort: { orderDate: 1 },
+  }).populate('customer');
   res.json(orders);
 };
 module.exports.showOrder = async (req, res, next) => {

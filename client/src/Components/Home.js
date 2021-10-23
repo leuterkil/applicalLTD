@@ -10,8 +10,10 @@ class Home extends React.Component {
   render() {
     return (
       <>
-        <h1>Καλώς ήρθες, {this.props.name}</h1>
-        <ButtonMenu />
+        <div className="container ">
+          <h1 className="text-center">Καλώς ήρθες, {this.props.name}</h1>
+          <ButtonMenu />
+        </div>
       </>
     );
   }
