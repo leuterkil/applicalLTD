@@ -43,15 +43,20 @@ class EditFrame extends React.Component {
       <>
         <h3>Επεξεργασία Κουφώματος</h3>
         <form onSubmit={(e) => this.handleSubmit(e)}>
-          <label htmlFor="typeOfFrame">Είδος Κουφώματος</label>
+          <label htmlFor="typeOfFrame" className="form-label">
+            Είδος Κουφώματος
+          </label>
           <input
             type="text"
             id="typeOfFrame"
             name="typeOfFrame"
+            className="form-control"
             value={this.state.typeOfFrame}
             onChange={this.onChange}
           />
-          <button type="submit">Αποθήκευση</button>
+          <button type="submit" className="mt-3 btn btn-success">
+            Ενημέρωση
+          </button>
         </form>
       </>
     );

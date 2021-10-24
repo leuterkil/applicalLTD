@@ -55,39 +55,59 @@ class EditCustomer extends React.Component {
       <>
         <h3>Επεξεργασία Πελάτη</h3>
         <form onSubmit={(e) => this.handleSubmit(e)}>
-          <label htmlFor="firstName">Όνομα</label>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            value={this.state.firstName}
-            onChange={this.onChange}
-          />
-          <label htmlFor="lastName">Επίθετο :</label>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            value={this.state.lastName}
-            onChange={this.onChange}
-          />
-          <label htmlFor="e-mail">E-mail</label>
+          <div className="row">
+            <div className="col-4">
+              <label htmlFor="firstName" className="form-label">
+                Όνομα
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                className="form-control"
+                value={this.state.firstName}
+                onChange={this.onChange}
+              />
+            </div>
+            <div className="col-4">
+              <label htmlFor="lastName" className="form-label">
+                Επίθετο :
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                className="form-control"
+                value={this.state.lastName}
+                onChange={this.onChange}
+              />
+            </div>
+          </div>
+          <label htmlFor="e-mail" className="form-label">
+            E-mail
+          </label>
           <input
             type="email"
             id="email"
             name="email"
+            className="form-control"
             value={this.state.email}
             onChange={this.onChange}
           />
-          <label htmlFor="phone">Τηλέφωνο</label>
+          <label htmlFor="phone" className="form-label">
+            Τηλέφωνο
+          </label>
           <input
             type="text"
             id="phone"
             name="phone"
+            className="form-control"
             value={this.state.phone}
             onChange={this.onChange}
           />
-          <button type="submit">Αποθήκευση</button>
+          <button type="submit" className="btn btn-success mt-3">
+            Ενημέρωση
+          </button>
         </form>
       </>
     );

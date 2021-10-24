@@ -8,7 +8,7 @@ class OrdersMenu extends React.Component {
   render() {
     return (
       <>
-        <h2 className="text-center">Λίστα Παραγγελιών</h2>
+        <h2 className="text-center">Λίστα Προσφορών</h2>
         <AllOrdersMenu />
       </>
     );

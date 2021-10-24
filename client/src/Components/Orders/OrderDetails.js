@@ -46,12 +46,12 @@ const expandContent = (arr) => {
         }),
         new TextRun({ break: 1 }),
         new TextRun({
-          text: `Τιμή : ${item.price}`,
+          text: `Τιμή : ${item.price}€`,
           size: 22,
         }),
         new TextRun({ break: 1 }),
         new TextRun({
-          text: `Συνολική Τιμή : ${item.qty * item.price}`,
+          text: `Συνολική Τιμή : ${item.qty * item.price}€`,
           size: 22,
         }),
         new TextRun({ break: 1 }),
@@ -231,7 +231,13 @@ class OrderDetails extends React.Component {
             }),
             ...expandContent(this.state.content),
             new Paragraph({
-              text: `Σύνολο Παραγγελίας : ${this.state.total}`,
+              children: [
+                new TextRun({
+                  text: `Σύνολο Προσφοράς : ${this.state.total}€`,
+                  color: '000000',
+                  bold: true,
+                }),
+              ],
               heading: HeadingLevel.HEADING_2,
             }),
           ],
@@ -245,7 +251,7 @@ class OrderDetails extends React.Component {
   render() {
     return (
       <>
-        <h3 className="text-center mb-4">Στοιχεία Παραγγελίας</h3>
+        <h3 className="text-center mb-4">Στοιχεία Προσφοράς</h3>
         <div className="border border-secondary px-5 py-3">
           <div className="d-flex">
             <p className="col-6 d-flex justify-content-start">
@@ -279,7 +285,7 @@ class OrderDetails extends React.Component {
             </p>
           </div>
         </div>
-        <h4 className="text-center my-3">Περιεχόμενο Παραγγελίας </h4>
+        <h4 className="text-center my-3">Περιεχόμενο Προσφοράς </h4>
         <div className="d-flex justify-content-center">
           <table className="text-center my-3">
             <tr>
@@ -292,6 +298,9 @@ class OrderDetails extends React.Component {
               </th>
               <th className="border border-secondary py-2 px-4">Ποσότητα</th>
               <th className="border border-secondary py-2 px-4">Τιμή</th>
+              <th className="border border-secondary py-2 px-4">
+                Συνολική Τιμή
+              </th>
             </tr>
             {this.state.content.map((item, index) => (
               <tr className="my-3" key={index}>
@@ -304,6 +313,9 @@ class OrderDetails extends React.Component {
                 </td>
                 <td className="border border-secondary">{item.qty}</td>
                 <td className="border border-secondary">{item.price} €</td>
+                <td className="border border-secondary">
+                  {item.price * item.qty} €
+                </td>
               </tr>
             ))}
           </table>

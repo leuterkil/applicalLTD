@@ -11,48 +11,102 @@ const AddItem = ({
   onChange,
   onAdd,
 }) => (
-  <div>
-    <input
-      type="text"
-      name="frameHeight"
-      id="frameHeight"
-      value={frameHeight}
-      onChange={onChange}
-    />
-    <input
-      type="text"
-      name="frameLength"
-      id="frameLength"
-      value={frameLength}
-      onChange={onChange}
-    />
-    <select id="frameDesc" name="frameDesc" onChange={onChange}>
-      {frame.map((item, index) => (
-        <option key={index} value={item._id}>
-          {item.typeOfFrame}
-        </option>
-      ))}
-    </select>
-    <input type="number" name="qty" id="qty" value={qty} onChange={onChange} />
-    <input
-      type="text"
-      name="price"
-      id="price"
-      value={price}
-      onChange={onChange}
-    />
-    <button type="button" onClick={onAdd}>
-      Add
+  <div className="row">
+    <div className="col-2">
+      <label htmlFor="frameHeight" className="form-label">
+        Ύψος
+      </label>
+      <input
+        className="form-control"
+        type="text"
+        name="frameHeight"
+        id="frameHeight"
+        value={frameHeight}
+        onChange={onChange}
+      />
+    </div>
+    <div className="col-2">
+      <label htmlFor="frameLength" className="form-label">
+        Πλάτος
+      </label>
+      <input
+        className="form-control"
+        type="text"
+        name="frameLength"
+        id="frameLength"
+        value={frameLength}
+        onChange={onChange}
+      />
+    </div>
+    <div className="col-2">
+      <label htmlFor="frameDesc" className="form-label">
+        Τύπος Κουφώματος
+      </label>
+      <select
+        id="frameDesc"
+        name="frameDesc"
+        onChange={onChange}
+        className="form-select"
+      >
+        {frame.map((item, index) => (
+          <option key={index} value={item._id}>
+            {item.typeOfFrame}
+          </option>
+        ))}
+      </select>
+    </div>
+    <div className="col-2">
+      <label htmlFor="qty" className="form-label">
+        Ποσότητα
+      </label>
+      <input
+        type="number"
+        className="form-control"
+        name="qty"
+        id="qty"
+        value={qty}
+        onChange={onChange}
+      />
+    </div>
+    <div className="col-2">
+      <label htmlFor="price" className="form-label">
+        Τιμή
+      </label>
+      <div className="input-group">
+        <input
+          type="text"
+          name="price"
+          id="price"
+          className="form-control"
+          value={price}
+          onChange={onChange}
+        />
+        <span className="input-group-text">€</span>
+      </div>
+    </div>
+    <button
+      type="button"
+      className="btn btn-success col-12 my-4"
+      onClick={onAdd}
+    >
+      <i className="fas fa-plus"></i>
     </button>
   </div>
 );
 
 const Item = ({ item, index, onRemove }) => (
   <li>
-    {item.frameHeight} * {item.frameLength} | {item.frameDesc} | {item.qty} |{' '}
-    {item.price} | συνολική τιμή : {item.qty * item.price}
-    <button type="button" onClick={(e) => onRemove(index)}>
-      Διαγραφή
+    <span className="lead">
+      <b>Διαστάσεις </b> : {item.frameHeight} * {item.frameLength} |{' '}
+      {item.frameDesc} | <b>Ποσότητα</b> : {item.qty} | <b>Τιμή</b> :{' '}
+      {item.price}€ | <b>Συνολική Τιμή</b> : {item.qty * item.price}€
+    </span>
+    <button
+      type="button"
+      className="btn btn-danger mx-3"
+      onClick={(e) => onRemove(index)}
+    >
+      <i className="fas fa-trash"></i>
     </button>
   </li>
 );
@@ -188,18 +242,28 @@ class EditOrder extends React.Component {
   render() {
     return (
       <>
-        <h3>Επεξεργασία Παραγγελίας</h3>
+        <h3>Επεξεργασία Προσφοράς</h3>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="address">Διεύθυνση : </label>
+          <label htmlFor="address" className="form-label">
+            Διεύθυνση :{' '}
+          </label>
           <input
             type="text"
             id="address"
+            className="form-control"
             name="address"
             value={this.state.address}
             onChange={this.onChange}
           />
-          <label htmlFor="customer">Πελάτης : </label>
-          <select name="customer" id="customer" onChange={this.onChange}>
+          <label htmlFor="customer" className="form-label">
+            Πελάτης :{' '}
+          </label>
+          <select
+            name="customer"
+            id="customer"
+            className="form-select"
+            onChange={this.onChange}
+          >
             <option default value={this.state.customerObj._id}>
               {this.state.customerObj.firstName}{' '}
               {this.state.customerObj.lastName}
@@ -214,37 +278,49 @@ class EditOrder extends React.Component {
               </option>
             ))}
           </select>
-          <label htmlFor="color">Χρώμα : </label>
+          <label htmlFor="color" className="form-label">
+            Χρώμα :{' '}
+          </label>
           <input
+            className="form-control"
             type="text"
             id="color"
             name="color"
             value={this.state.color}
             onChange={this.onChange}
           />
-          <label htmlFor="windowOfFrame">Τζάμι : </label>
+          <label htmlFor="windowOfFrame" className="form-label">
+            Τζάμι :{' '}
+          </label>
           <input
+            className="form-control"
             type="text"
             id="windoOfFrame"
             name="windowOfFrame"
             value={this.state.windowOfFrame}
             onChange={this.onChange}
           />
-          <label htmlFor="typeFrame">Τύπος : </label>
+          <label htmlFor="typeFrame" className="form-label">
+            Τύπος :{' '}
+          </label>
           <input
+            className="form-control"
             type="text"
             id="typeFrame"
             name="typeFrame"
             value={this.state.typeFrame}
             onChange={this.onChange}
           />
-          <label htmlFor="notes">Παρατηρήσεις : </label>
-          <input
-            type="textarea"
+          <label htmlFor="notes" className="form-label">
+            Παρατηρήσεις :{' '}
+          </label>
+          <textarea
+            className="form-control mb-3"
             id="notes"
             name="notes"
             value={this.state.notes}
             onChange={this.onChange}
+            rows="5"
           />
           <AddItem
             frameHeight={this.state.frameHeight}
@@ -257,8 +333,14 @@ class EditOrder extends React.Component {
           />
           <List list={this.state.contentList} onRemove={this.handleRemove} />
           <br />
-          <b>Σύνολο Παραγγελίας : {this.state.total}</b>
-          <button type="submit">Αποθήκευση</button>
+          <div className="text-center">
+            <b className="display-6">
+              Σύνολο Παραγγελίας : {this.state.total}€
+            </b>
+          </div>
+          <button type="submit" className="btn btn-success col-12 mt-3">
+            Ενημέρωση
+          </button>
         </form>
       </>
     );

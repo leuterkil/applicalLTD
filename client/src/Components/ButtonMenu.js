@@ -35,7 +35,7 @@ class ButtonMenu extends React.Component {
               Κουφώματα
             </Link>
             <Link className="links btn btn-primary px-5 py-3 my-2" to="/orders">
-              Παραγγελίες
+              Προσφορές
             </Link>
           </div>
           <Switch>

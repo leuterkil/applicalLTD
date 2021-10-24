@@ -37,7 +37,7 @@ class AllOrdersMenu extends React.Component {
       <>
         <div className="d-flex justify-content-end">
           <Link className="btn btn-success" to="/orders/new">
-            Νέα Παραγγελία <i className="fas fa-plus"></i>
+            Νέα Προσφορά <i className="fas fa-plus"></i>
           </Link>
         </div>
         <ul className="list-container py-2 px-2 my-3">
@@ -74,7 +74,7 @@ class AllOrdersMenu extends React.Component {
                   Διεύθυνση Παράδοσης : {order.address}
                 </div>{' '}
                 <div className="d-flex col-6 justify-content-end px-3">
-                  Ημ/νια Παραγγελίας : {this.state.dateOfOrder}{' '}
+                  Ημ/νια Προσφοράς : {this.state.dateOfOrder}{' '}
                 </div>
               </i>
             </li>
