@@ -1,8 +1,66 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import 'moment/locale/el';
+import { saveAs } from 'file-saver';
+import {
+  AlignmentType,
+  Document,
+  HeadingLevel,
+  Packer,
+  Paragraph,
+  TextRun,
+} from 'docx';
 const axios = require('axios');
 const moment = require('moment');
+
+const saveDocumentToFile = (doc, fileName) => {
+  const packer = new Packer();
+  const mimeType =
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  Packer.toBlob(doc).then((blob) => {
+    const docBlob = blob.slice(0, blob.size, mimeType);
+    saveAs(docBlob, fileName);
+  });
+};
+
+const expandContent = (arr) => {
+  console.log(arr);
+  return arr.map((item, index) => {
+    return new Paragraph({
+      children: [
+        new TextRun({ text: index + 1, size: 30 }),
+        new TextRun({ break: 2 }),
+        new TextRun({
+          text: `Διαστάσεις : ${item.frameHeight} X ${item.frameLength}`,
+          size: 22,
+        }),
+        new TextRun({ break: 1 }),
+        new TextRun({
+          text: `Τύπος Κουφώματος : ${item.frameDesc.typeOfFrame}`,
+          size: 22,
+        }),
+        new TextRun({ break: 1 }),
+        new TextRun({
+          text: `Ποσότητα : ${item.qty}`,
+          size: 22,
+        }),
+        new TextRun({ break: 1 }),
+        new TextRun({
+          text: `Τιμή : ${item.price}`,
+          size: 22,
+        }),
+        new TextRun({ break: 1 }),
+        new TextRun({
+          text: `Συνολική Τιμή : ${item.qty * item.price}`,
+          size: 22,
+        }),
+        new TextRun({ break: 1 }),
+        new TextRun({ break: 2 }),
+        new TextRun({ break: 2 }),
+      ],
+    });
+  });
+};
 
 class OrderDetails extends React.Component {
   constructor(props) {
@@ -18,6 +76,7 @@ class OrderDetails extends React.Component {
       windowOfFrame: '',
     };
   }
+
   componentDidMount() {
     const oid = this.props.match.params.oid;
     axios
@@ -43,6 +102,146 @@ class OrderDetails extends React.Component {
       })
       .catch((e) => console.log(e));
   }
+
+  generateWordDocument() {
+    const doc = new Document({
+      sections: [
+        {
+          children: [
+            new Paragraph({
+              children: [
+                new TextRun({ text: 'Aplical ltd', size: 24, font: 'calibri' }),
+                new TextRun({ break: 1 }),
+                new TextRun({
+                  text: 'ΠΟΡΤΕΣ - ΠΑΡΑΘΥΡΑ',
+                  size: 24,
+                  font: 'calibri',
+                }),
+                new TextRun({ break: 1 }),
+                new TextRun({
+                  text: 'Al.stampolyiski 14',
+                  size: 24,
+                  font: 'calibri',
+                }),
+                new TextRun({ break: 1 }),
+                new TextRun({
+                  text: 'Petrich Bulgaria',
+                  size: 24,
+                  font: 'calibri',
+                }),
+                new TextRun({ break: 1 }),
+                new TextRun({
+                  text: 'tel: +306976843834',
+                  size: 24,
+                  font: 'calibri',
+                }),
+              ],
+            }),
+            new Paragraph({
+              text: 'ΟΙΚΟΝΟΜΟΤΕΧΝΙΚΗ ΜΕΛΕΤΗ ΚΟΥΦΩΜΑΤΩΝ',
+              heading: HeadingLevel.TITLE,
+              alignment: AlignmentType.CENTER,
+            }),
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: 'Στοιχεια Προσφοράς',
+                  color: '000000',
+                }),
+              ],
+              heading: HeadingLevel.HEADING_1,
+              alignment: AlignmentType.CENTER,
+            }),
+
+            new Paragraph({
+              children: [
+                new TextRun({
+                  text: 'Ημερομηνία : ',
+                  bold: true,
+                  size: 20,
+                  font: 'calibri',
+                }),
+                new TextRun({
+                  text: `${this.state.dateOfOrder}  `,
+                  size: 20,
+                  font: 'calibri',
+                }),
+                new TextRun({ break: 1 }),
+                new TextRun({
+                  text: 'Πελάτης : ',
+                  bold: true,
+                  size: 20,
+                  font: 'calibri',
+                }),
+                new TextRun({
+                  text: `${this.state.customer.firstName} ${this.state.customer.lastName}  `,
+                  size: 20,
+                  font: 'calibri',
+                }),
+                new TextRun({ break: 1 }),
+                new TextRun({
+                  text: 'Διεύθυνση : ',
+                  bold: true,
+                  size: 20,
+                  font: 'calibri',
+                }),
+                new TextRun({
+                  text: `${this.state.order.address}  `,
+                  size: 20,
+                  font: 'calibri',
+                }),
+                new TextRun({ break: 1 }),
+                new TextRun({
+                  text: 'Τζάμι : ',
+                  bold: true,
+                  size: 20,
+                  font: 'calibri',
+                }),
+                new TextRun({
+                  text: `${this.state.windowOfFrame}  `,
+                  size: 20,
+                  font: 'calibri',
+                }),
+                new TextRun({ break: 1 }),
+                new TextRun({
+                  text: 'Χρώμα : ',
+                  bold: true,
+                  size: 20,
+                  font: 'calibri',
+                }),
+                new TextRun({
+                  text: `${this.state.color}  `,
+                  size: 20,
+                  font: 'calibri',
+                }),
+                new TextRun({ break: 1 }),
+                new TextRun({
+                  text: 'Τύπος : ',
+                  bold: true,
+                  size: 20,
+                  font: 'calibri',
+                }),
+                new TextRun({
+                  text: `${this.state.typeFrame}  `,
+                  size: 20,
+                  font: 'calibri',
+                }),
+                new TextRun({ break: 2 }),
+              ],
+            }),
+            ...expandContent(this.state.content),
+            new Paragraph({
+              text: `Σύνολο Παραγγελίας : ${this.state.total}`,
+              heading: HeadingLevel.HEADING_2,
+            }),
+          ],
+        },
+      ],
+    });
+
+    saveDocumentToFile(doc, 'test.docx');
+  }
+
   render() {
     return (
       <>
@@ -67,7 +266,13 @@ class OrderDetails extends React.Component {
           </div>
           <div className="d-flex">
             <p className="col-6 d-flex justify-content-start">
-              <b>Διεύθυνση :</b> {this.state.order.address}
+              <b>Διεύθυνση :</b>{' '}
+              <a
+                target="_blank"
+                href={`https://maps.google.com/?q=${this.state.order.address}`}
+              >
+                {this.state.order.address} <i className="fas fa-directions"></i>
+              </a>
             </p>
             <p className="col-6 d-flex justify-content-start">
               <b>Τύπος : </b> {this.state.typeFrame}
@@ -112,6 +317,16 @@ class OrderDetails extends React.Component {
           <h6>Παρατηρήσεις </h6>{' '}
           <div className="border border-dark p-2">{this.state.order.notes}</div>
         </p>
+        <div className="d-flex justify-content-center my-5">
+          <button
+            type="button"
+            className="btn btn-primary mx-3"
+            onClick={(e) => this.generateWordDocument()}
+          >
+            Έκδοση Αρχείου Word
+          </button>
+          <button className="btn btn-success">Έκδοση Αρχείου Excel</button>
+        </div>
       </>
     );
   }
