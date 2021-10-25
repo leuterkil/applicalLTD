@@ -12,8 +12,10 @@ import Customer from './Customers/Customer';
 import EditCustomer from './Customers/EditCustomer';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import NewCustomer from './Customers/NewCustomer';
+import { AuthRoute, ProtectedRoute } from '../util/route';
 
 import './styles/ButtonMenu.css';
+import Login from './Login';
 
 class ButtonMenu extends React.Component {
   constructor(props) {
@@ -38,44 +40,23 @@ class ButtonMenu extends React.Component {
               Προσφορές
             </Link>
           </div>
-          <Switch>
-            <Route path="/customers/new">
-              <NewCustomer />
-            </Route>
-            <Route path="/customers/edit/:cid">
-              <EditCustomer />
-            </Route>
 
-            <Route path="/customers/:cid">
-              <Customer />
-            </Route>
-            <Route path="/customers">
-              <CustomersMenu />
-            </Route>
-            <Route path="/frames/new">
-              <NewFrame />
-            </Route>
-            <Route path="/frames/edit/:fid">
-              <EditFrame />
-            </Route>
-            <Route path="/frames/:fid">
-              <Frame />
-            </Route>
-            <Route path="/frames">
-              <FramesMenu />
-            </Route>
-            <Route path="/orders/new">
-              <NewOrder />
-            </Route>
-            <Route path="/orders/edit/:oid">
-              <EditOrder />
-            </Route>
-            <Route path="/orders/:oid">
-              <OrderDetails />
-            </Route>
-            <Route path="/orders">
-              <OrdersMenu />
-            </Route>
+          <Switch>
+            <ProtectedRoute path="/customers/new" component={NewCustomer} />
+            <ProtectedRoute
+              path="/customers/edit/:cid"
+              component={EditCustomer}
+            />
+            <ProtectedRoute path="/customers/:cid" component={Customer} />
+            <ProtectedRoute path="/customers" component={CustomersMenu} />
+            <ProtectedRoute path="/frames/new" component={NewFrame} />
+            <ProtectedRoute path="/frames/edit/:fid" component={EditFrame} />
+            <ProtectedRoute path="/frames/:fid" component={Frame} />
+            <ProtectedRoute path="/frames" component={FramesMenu} />
+            <ProtectedRoute path="/orders/new" component={NewOrder} />
+            <ProtectedRoute path="/orders/edit/:oid" component={EditOrder} />
+            <ProtectedRoute path="/orders/:oid" component={OrderDetails} />
+            <ProtectedRoute path="/orders" component={OrdersMenu} />
           </Switch>
         </Router>
       </>

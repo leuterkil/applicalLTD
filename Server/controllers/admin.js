@@ -17,9 +17,13 @@ module.exports.addNewAdmin = async (req, res, next) => {
 };
 
 module.exports.login = (req, res) => {
-  const redirectUrl = req.session.returnTo || '/';
-  delete req.session.returnTo;
-  res.send('log in');
+  const userObj = { username: req.user.username, userId: req.user._id };
+  req.session.user = userObj;
+  res.send(req.user);
+};
+
+module.exports.session = (req, res) => {
+  res.send(req.session.user);
 };
 module.exports.getAllAdmins = (req, res) => {
   Admin.find((err, Admin) => {

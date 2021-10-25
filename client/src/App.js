@@ -2,6 +2,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Home from './Components/Home';
+import Login from './Components/Login';
+import { AuthRoute, ProtectedRoute } from './util/route';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 const axios = require('axios');
 
 const serverUrl = 'http://localhost:4000';
@@ -11,15 +14,19 @@ class App extends React.Component {
     super(props);
     this.state = { admin: [] };
   }
-  componentDidMount() {
-    axios.get(`${serverUrl}/admin/616a9bbbc57b382a3f40f1c3`).then((res) => {
-      this.setState({ admin: res.data });
-    });
-  }
+  componentDidMount() {}
   render() {
     return (
       <>
-        <Home name={this.state.admin.username} />
+        <center>
+          <img src="https://res.cloudinary.com/diyjlmw18/image/upload/w_200,ar_16:9,c_fill,g_auto,e_sharpen/v1635186278/AplicalLTD/64227245_1023024817899638_8711578648622137344_n.jpg_qnu0co.jpg" />
+        </center>
+        <Router>
+          <Switch>
+            <AuthRoute path="/login" component={Login} />
+            <ProtectedRoute path="/" component={Home} />
+          </Switch>
+        </Router>
       </>
     );
   }

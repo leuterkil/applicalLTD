@@ -1,5 +1,10 @@
 import React from 'react';
 import ButtonMenu from './ButtonMenu';
+import { connect } from 'react-redux';
+
+const mapStateToProps = ({ session }) => ({
+  session,
+});
 
 class Home extends React.Component {
   constructor(props) {
@@ -11,7 +16,9 @@ class Home extends React.Component {
     return (
       <>
         <div className="container ">
-          <h1 className="text-center">Καλώς ήρθες, {this.props.name}</h1>
+          <h1 className="text-center">
+            Καλώς ήρθες, {this.props.session.username}
+          </h1>
           <ButtonMenu />
         </div>
       </>
@@ -19,4 +26,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default connect(mapStateToProps)(Home);
