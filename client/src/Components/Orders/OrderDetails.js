@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import 'moment/locale/el';
 import { saveAs } from 'file-saver';
+import image from '../../img/image.jpg';
 import {
   AlignmentType,
   Document,
@@ -10,8 +11,13 @@ import {
   Paragraph,
   TextRun,
 } from 'docx';
+import * as fs from 'fs';
 const axios = require('axios');
 const moment = require('moment');
+
+async function urlToBlob(url) {
+  return (await fetch(image)).blob();
+}
 
 const saveDocumentToFile = (doc, fileName) => {
   const packer = new Packer();
@@ -103,7 +109,7 @@ class OrderDetails extends React.Component {
       .catch((e) => console.log(e));
   }
 
-  generateWordDocument() {
+  async generateWordDocument(pdf) {
     const doc = new Document({
       sections: [
         {
@@ -244,7 +250,6 @@ class OrderDetails extends React.Component {
         },
       ],
     });
-
     saveDocumentToFile(doc, 'test.docx');
   }
 
@@ -253,25 +258,25 @@ class OrderDetails extends React.Component {
       <>
         <h3 className="text-center mb-4">Στοιχεία Προσφοράς</h3>
         <div className="border border-secondary px-5 py-3">
-          <div className="d-flex">
-            <p className="col-6 d-flex justify-content-start">
+          <div className="d-md-flex">
+            <p className="col-md-6 col-12 d-flex justify-content-start">
               <b>Ημερομηνία : </b> {this.state.dateOfOrder}
             </p>
-            <p className="col-6 d-flex justify-content-start">
+            <p className="col-md-6 col-12 d-flex justify-content-start">
               <b>Τζάμι :</b> {this.state.windowOfFrame}
             </p>
           </div>
-          <div className="d-flex">
-            <p className="col-6 d-flex justify-content-start">
+          <div className="d-md-flex">
+            <p className="col-md-6 col-12 d-flex justify-content-start">
               <b>Πελάτης :</b> {this.state.customer.firstName}{' '}
               {this.state.customer.lastName}
             </p>
-            <p className="col-6 d-flex justify-content-start">
+            <p className="col-md-6 col-12 d-flex justify-content-start">
               <b>Χρώμα :</b> {this.state.color}
             </p>
           </div>
-          <div className="d-flex">
-            <p className="col-6 d-flex justify-content-start">
+          <div className="d-md-flex">
+            <p className="col-md-6 col-12 d-flex justify-content-start">
               <b>Διεύθυνση :</b>{' '}
               <a
                 target="_blank"
@@ -280,25 +285,29 @@ class OrderDetails extends React.Component {
                 {this.state.order.address} <i className="fas fa-directions"></i>
               </a>
             </p>
-            <p className="col-6 d-flex justify-content-start">
+            <p className="col-md-6 col-12 d-flex justify-content-start">
               <b>Τύπος : </b> {this.state.typeFrame}
             </p>
           </div>
         </div>
         <h4 className="text-center my-3">Περιεχόμενο Προσφοράς </h4>
         <div className="d-flex justify-content-center">
-          <table className="text-center my-3">
+          <table className="text-center my-3 table-list">
             <tr>
-              <th className="border border-secondary py-2 px-4">Α/Α</th>
-              <th className="border border-secondary py-2 px-4">
+              <th className="border border-secondary py-2 px-md-4 px-2">Α/Α</th>
+              <th className="border border-secondary py-2 px-md-4">
                 Διαστάσεις(Ύψος Χ Πλάτος)
               </th>
-              <th className="border border-secondary py-2 px-4">
+              <th className="border border-secondary py-2 px-md-4">
                 Τύπος Κουφώματος
               </th>
-              <th className="border border-secondary py-2 px-4">Ποσότητα</th>
-              <th className="border border-secondary py-2 px-4">Τιμή</th>
-              <th className="border border-secondary py-2 px-4">
+              <th className="border border-secondary py-2 px-md-4 px-1">
+                Ποσότητα
+              </th>
+              <th className="border border-secondary py-2 px-md-4 px-1">
+                Τιμή
+              </th>
+              <th className="border border-secondary py-2 px-md-4 px-1">
                 Συνολική Τιμή
               </th>
             </tr>
@@ -333,11 +342,10 @@ class OrderDetails extends React.Component {
           <button
             type="button"
             className="btn btn-primary mx-3"
-            onClick={(e) => this.generateWordDocument()}
+            onClick={(e) => this.generateWordDocument(false)}
           >
-            Έκδοση Αρχείου Word
+            Έκδοση Αρχείου Word <i class=" fa fa-file-word px-1"></i>
           </button>
-          <button className="btn btn-success">Έκδοση Αρχείου Excel</button>
         </div>
       </>
     );

@@ -12,7 +12,7 @@ const AddItem = ({
 }) => (
   <div>
     <div className="row my-4">
-      <div className="col-2">
+      <div className="col-md-2 col-6">
         <label htmlFor="frameHeight" className="form-label">
           Ύψος
         </label>
@@ -25,7 +25,7 @@ const AddItem = ({
           onChange={onChange}
         />
       </div>
-      <div className="col-2">
+      <div className="col-md-2 col-6">
         <label htmlFor="frameLength" className="form-label">
           Πλάτος
         </label>
@@ -38,7 +38,7 @@ const AddItem = ({
           onChange={onChange}
         />
       </div>
-      <div className="col-2">
+      <div className="col-md-2 col-12">
         <label htmlFor="frameDesc" className="form-label">
           Τύπος Κουφώματος
         </label>
@@ -55,7 +55,7 @@ const AddItem = ({
           ))}
         </select>
       </div>
-      <div className="col-2">
+      <div className="col-md-2 col-6">
         <label htmlFor="qty" className="form-label">
           Ποσότητα
         </label>
@@ -68,7 +68,7 @@ const AddItem = ({
           onChange={onChange}
         />
       </div>
-      <div className="col-2">
+      <div className="col-md-2 col-6">
         <label htmlFor="price" className="form-label">
           Τιμή
         </label>
@@ -95,7 +95,7 @@ const AddItem = ({
 
 const Item = ({ item, index, onRemove }) => (
   <li>
-    <span className="lead">
+    <span className="lead list-item">
       <b>Διαστάσεις</b> : {item.frameHeight} X {item.frameLength} |{' '}
       {item.frameDesc} | <b>Ποσότητα</b> : {item.qty} |<b> Τιμή</b> :{' '}
       {item.price}€ |<b> Συνολική Τιμή</b> : {item.qty * item.price}€

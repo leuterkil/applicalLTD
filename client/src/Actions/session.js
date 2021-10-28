@@ -14,6 +14,10 @@ const logoutCurrentUser = () => ({
 
 export const login = (user) => async (dispatch) => {
   const data = await apiUtil.login(user);
+  console.log(data);
+  if (!data) {
+    return dispatch(receiveErrors(data.data.error.message));
+  }
   return dispatch(receiveCurrentUser(data.data));
 };
 // export const signup = (user) => async (dispatch) => {

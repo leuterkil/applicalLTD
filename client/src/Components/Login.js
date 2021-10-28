@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { login } from '../Actions/session';
+import { Helmet } from 'react-helmet';
 
 const mapStateToProps = ({ errors }) => ({
   errors,
@@ -22,6 +23,9 @@ const Login = ({ errors, login }) => {
   };
   return (
     <>
+      <Helmet>
+        <title>Login - Applical LTD</title>
+      </Helmet>
       <div className="container text-center">
         <h1>Login</h1>
         <p>{errors}</p>

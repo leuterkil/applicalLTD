@@ -6,6 +6,7 @@ import Login from './Components/Login';
 import { AuthRoute, ProtectedRoute } from './util/route';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 const axios = require('axios');
+axios.defaults.withCredentials = true;
 
 const serverUrl = 'http://localhost:4000';
 

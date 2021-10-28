@@ -16,6 +16,7 @@ class AllCustomers extends React.Component {
   }
 
   deleteCustomer(id, e) {
+    console.log(id);
     axios.delete(`http://localhost:4000/customer/${id}`).then((res) => {
       console.log(res.data);
       const el = document.querySelector(`#cid${id}`);

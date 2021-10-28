@@ -17,9 +17,13 @@ module.exports.addNewAdmin = async (req, res, next) => {
 };
 
 module.exports.login = (req, res) => {
-  const userObj = { username: req.user.username, userId: req.user._id };
-  req.session.user = userObj;
-  res.send(req.user);
+  try {
+    const userObj = { username: req.user.username, userId: req.user._id };
+    req.session.user = userObj;
+    res.send(req.user);
+  } catch (e) {
+    res.send(e);
+  }
 };
 
 module.exports.session = (req, res) => {

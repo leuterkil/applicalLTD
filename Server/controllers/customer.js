@@ -24,13 +24,13 @@ module.exports.findAllCustomers = async (req, res, next) => {
 };
 
 module.exports.deleteCustomerById = async (req, res, next) => {
-  const customer = await Customer.findOneAndDelete(req.params.cid);
+  const customer = await Customer.findByIdAndDelete(req.params.cid);
   const orders = await Order.deleteMany({ customer: req.params.cid });
 
   res.json(customer);
 };
 module.exports.UpdateCustomerById = async (req, res, next) => {
-  const customer = await Customer.findOneAndUpdate(req.params.cid, {
+  const customer = await Customer.findByIdAndUpdate(req.params.cid, {
     ...req.body,
   });
   res.json(customer);

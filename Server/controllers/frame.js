@@ -21,7 +21,7 @@ module.exports.findAllFrames = async (req, res, next) => {
 };
 module.exports.deleteFrame = async (req, res, next) => {
   try {
-    const frame = await Frame.findOneAndDelete(req.params.fid);
+    const frame = await Frame.findByIdAndDelete(req.params.fid);
     res.json(frame);
   } catch (e) {
     res.send(e);
@@ -30,7 +30,7 @@ module.exports.deleteFrame = async (req, res, next) => {
 
 module.exports.updateFrame = async (req, res, next) => {
   try {
-    const frame = await Frame.findOneAndUpdate(req.params.fid, {
+    const frame = await Frame.findByIdAndUpdate(req.params.fid, {
       ...req.body,
     });
     res.json(frame);

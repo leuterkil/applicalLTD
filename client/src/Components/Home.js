@@ -1,7 +1,7 @@
 import React from 'react';
 import ButtonMenu from './ButtonMenu';
 import { connect } from 'react-redux';
-
+import { Helmet } from 'react-helmet';
 const mapStateToProps = ({ session }) => ({
   session,
 });
@@ -15,6 +15,9 @@ class Home extends React.Component {
   render() {
     return (
       <>
+        <Helmet>
+          <title>Aplical LTD</title>
+        </Helmet>
         <div className="container ">
           <h1 className="text-center">
             Καλώς ήρθες, {this.props.session.username}

@@ -11,6 +11,7 @@ li {
   transition-duration: 0.25s;
   border-bottom: none;
 }
+
 .list-link:hover {
   color: #333;
   transition-duration: 0.25s;
@@ -27,4 +28,19 @@ li {
 
 .indexes {
   padding-right: 2rem;
+}
+@media (max-width: 786px) {
+  .links {
+    font-size: small;
+  }
+  .list-item {
+    font-size: medium;
+  }
+  .list-link {
+    font-size: large;
+  }
+  .table-list tr th,
+  .table-list tr td {
+    font-size: small;
+  }
 }

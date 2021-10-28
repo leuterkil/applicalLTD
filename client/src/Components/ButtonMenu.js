@@ -28,15 +28,21 @@ class ButtonMenu extends React.Component {
         <Router>
           <div className="menu-container d-flex justify-content-around my-4 px-2 py-2">
             <Link
-              className="links btn btn-primary px-5 py-3 my-2"
+              className="links btn btn-primary px-0 px-md-5 py-3 my-2"
               to="/customers"
             >
               Πελάτες
             </Link>
-            <Link className="links btn btn-primary px-5 py-3 my-2" to="/frames">
+            <Link
+              className="links btn btn-primary px-0  px-md-5 py-3 my-2"
+              to="/frames"
+            >
               Κουφώματα
             </Link>
-            <Link className="links btn btn-primary px-5 py-3 my-2" to="/orders">
+            <Link
+              className="links btn btn-primary px-0  px-md-5 py-3 my-2"
+              to="/orders"
+            >
               Προσφορές
             </Link>
           </div>

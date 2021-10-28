@@ -41,11 +41,17 @@ module.exports.showOrder = async (req, res, next) => {
 };
 
 module.exports.deleteOrder = async (req, res, next) => {
-  const order = await Order.findOneAndDelete(req.params.oid);
+  const order = await Order.findByIdAndDelete(req.params.oid);
+  res.json(order);
+};
+
+module.exports.findOrderByCustomer = async (req, res, next) => {
+  const cid = req.params.cid;
+  const order = await Order.find({ customer: cid });
   res.json(order);
 };
 
 module.exports.updateOrder = async (req, res, next) => {
-  const order = await Order.findOneAndUpdate(req.params.oid, { ...req.body });
+  const order = await Order.findByIdAndUpdate(req.params.oid, { ...req.body });
   res.json(order);
 };
