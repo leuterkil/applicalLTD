@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'moment/locale/el';
+import { Modal, Button } from 'react-bootstrap';
 const axios = require('axios');
 const moment = require('moment');
 
 class AllOrdersMenu extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { orders: [], dateOfOrder: [] };
+    this.state = { orders: [], dateOfOrder: [], showModal: false, ordId: '' };
+    this.handleCloseMod = this.handleCloseMod.bind(this);
   }
 
   componentDidMount() {
@@ -24,14 +26,21 @@ class AllOrdersMenu extends React.Component {
     });
   }
 
-  deleteOrder(id, e) {
+  deleteOrder(id, e, Close) {
     axios.delete(`http://localhost:4000/order/${id}`).then((res) => {
       console.log(res.data);
       const el = document.querySelector(`#oid${id}`);
 
       // remove the list item
       el.parentElement.removeChild(el);
+      Close();
     });
+  }
+  handleShow(id, e) {
+    this.setState({ showModal: true, ordId: id });
+  }
+  handleCloseMod() {
+    this.setState({ showModal: false });
   }
 
   render() {
@@ -60,7 +69,8 @@ class AllOrdersMenu extends React.Component {
                 <div className="d-flex col-md-6 col-3 justify-content-end px-3">
                   <button
                     className="btn btn-link"
-                    onClick={(e) => this.deleteOrder(order._id, e)}
+                    // onClick={(e) => this.deleteOrder(order._id, e)}
+                    onClick={(e) => this.handleShow(order._id, e)}
                   >
                     <i className="fas fa-trash text-danger"></i>
                   </button>
@@ -79,6 +89,28 @@ class AllOrdersMenu extends React.Component {
                   Ημ/νια Προσφοράς : {this.state.dateOfOrder[index]}{' '}
                 </div>
               </i>
+
+              <Modal show={this.state.showModal} onHide={this.handleCloseMod}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Διαγραφή Προσφοράς</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Είστε Σίγουροι για την διαγραφή της τρέχουσας Προσφοράς;
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={this.handleCloseMod}>
+                    Ακύρωση
+                  </Button>
+                  <Button
+                    variant="danger"
+                    onClick={(e) =>
+                      this.deleteOrder(this.state.ordId, e, this.handleCloseMod)
+                    }
+                  >
+                    Διαγραφή Προσφοράς
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </li>
           ))}
         </ul>

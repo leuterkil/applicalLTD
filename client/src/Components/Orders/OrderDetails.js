@@ -7,11 +7,12 @@ import {
   AlignmentType,
   Document,
   HeadingLevel,
+  ImageRun,
   Packer,
   Paragraph,
   TextRun,
 } from 'docx';
-import * as fs from 'fs';
+import { jsPDF } from 'jspdf';
 const axios = require('axios');
 const moment = require('moment');
 
@@ -109,11 +110,27 @@ class OrderDetails extends React.Component {
       .catch((e) => console.log(e));
   }
 
-  async generateWordDocument(pdf) {
+  async generateWordDocument(docName) {
+    const blob = await fetch(
+      'https://res.cloudinary.com/diyjlmw18/image/upload/w_200,ar_16:9,c_fill,g_auto,e_sharpen/v1635186278/AplicalLTD/64227245_1023024817899638_8711578648622137344_n.jpg_qnu0co.jpg'
+    ).then((r) => r.blob());
+
     const doc = new Document({
       sections: [
         {
           children: [
+            new Paragraph({
+              children: [
+                new ImageRun({
+                  data: blob,
+                  transformation: {
+                    height: 100,
+                    width: 200,
+                  },
+                }),
+              ],
+              alignment: AlignmentType.CENTER,
+            }),
             new Paragraph({
               children: [
                 new TextRun({ text: 'Aplical ltd', size: 24, font: 'calibri' }),
@@ -250,10 +267,29 @@ class OrderDetails extends React.Component {
         },
       ],
     });
-    saveDocumentToFile(doc, 'test.docx');
+    saveDocumentToFile(doc, `${docName}.docx`);
+  }
+  async generatePDF() {
+    const blob = await fetch(
+      'https://res.cloudinary.com/diyjlmw18/image/upload/w_200,ar_16:9,c_fill,g_auto,e_sharpen/v1635186278/AplicalLTD/64227245_1023024817899638_8711578648622137344_n.jpg_qnu0co.jpg'
+    ).then((r) => r.blob());
+    const doc = new jsPDF();
+
+    doc.addImage(
+      'https://res.cloudinary.com/diyjlmw18/image/upload/w_200,ar_16:9,c_fill,g_auto,e_sharpen/v1635186278/AplicalLTD/64227245_1023024817899638_8711578648622137344_n.jpg_qnu0co.jpg',
+      'JPEG',
+      95,
+      40,
+      0,
+      0,
+      { align: 'center' }
+    );
+    doc.text('Hello world!', 95, 10, { align: 'center' });
+    doc.save('a4.pdf');
   }
 
   render() {
+    const docName2 = `${this.state.customer.firstName}_${this.state.customer.lastName}_${this.state.order._id}`;
     return (
       <>
         <h3 className="text-center mb-4">Στοιχεία Προσφοράς</h3>
@@ -342,9 +378,16 @@ class OrderDetails extends React.Component {
           <button
             type="button"
             className="btn btn-primary mx-3"
-            onClick={(e) => this.generateWordDocument(false)}
+            onClick={(e) => this.generateWordDocument(docName2)}
           >
             Έκδοση Αρχείου Word <i class=" fa fa-file-word px-1"></i>
+          </button>
+          <button
+            type="button"
+            className="btn btn-danger mx-3"
+            onClick={(e) => this.generatePDF()}
+          >
+            Έκδοση Αρχείου PDF <i class=" fa fa-file-pdf px-1"></i>
           </button>
         </div>
       </>

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/public.css';
+import { Button, Modal } from 'react-bootstrap';
 const axios = require('axios');
 
 class AllCustomers extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { customers: [] };
+    this.state = { customers: [], custId: '', showModal: false, custName: '' };
+    this.handleCloseMod = this.handleCloseMod.bind(this);
   }
 
   componentDidMount() {
@@ -15,7 +17,7 @@ class AllCustomers extends React.Component {
     });
   }
 
-  deleteCustomer(id, e) {
+  deleteCustomer(id, e, close) {
     console.log(id);
     axios.delete(`http://localhost:4000/customer/${id}`).then((res) => {
       console.log(res.data);
@@ -23,7 +25,14 @@ class AllCustomers extends React.Component {
 
       // remove the list item
       el.parentElement.removeChild(el);
+      close();
     });
+  }
+  handleShow(id, fullName, e) {
+    this.setState({ showModal: true, custId: id, custName: fullName });
+  }
+  handleCloseMod() {
+    this.setState({ showModal: false });
   }
   render() {
     return (
@@ -56,7 +65,13 @@ class AllCustomers extends React.Component {
               <div className="d-flex justify-content-end col-6">
                 <button
                   className="btn btn-link"
-                  onClick={(e) => this.deleteCustomer(customer._id, e)}
+                  onClick={(e) =>
+                    this.handleShow(
+                      customer._id,
+                      `${customer.firstName} ${customer.lastName}`,
+                      e
+                    )
+                  }
                 >
                   <i className="fas fa-trash text-danger"></i>
                 </button>
@@ -69,6 +84,38 @@ class AllCustomers extends React.Component {
                   </Link>
                 </button>
               </div>
+              <Modal show={this.state.showModal} onHide={this.handleCloseMod}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Διαγραφή Πελάτη</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <p>
+                    Είστε Σίγουροι για την διαγραφή του πελάτη{' '}
+                    <b>{this.state.custName}</b>
+                  </p>
+                  <p>
+                    (προσοχή με την διαγραφή του πελάτη θα διαγραφούν και οι
+                    παραγγελίες που συνδέονται με αυτόν)
+                  </p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={this.handleCloseMod}>
+                    Ακύρωση
+                  </Button>
+                  <Button
+                    variant="danger"
+                    onClick={(e) =>
+                      this.deleteCustomer(
+                        this.state.custId,
+                        e,
+                        this.handleCloseMod
+                      )
+                    }
+                  >
+                    Διαγραφή Πελάτη
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </li>
           ))}
         </ul>
