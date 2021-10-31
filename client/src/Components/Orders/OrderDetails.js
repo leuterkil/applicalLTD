@@ -269,23 +269,22 @@ class OrderDetails extends React.Component {
     });
     saveDocumentToFile(doc, `${docName}.docx`);
   }
-  async generatePDF() {
-    const blob = await fetch(
-      'https://res.cloudinary.com/diyjlmw18/image/upload/w_200,ar_16:9,c_fill,g_auto,e_sharpen/v1635186278/AplicalLTD/64227245_1023024817899638_8711578648622137344_n.jpg_qnu0co.jpg'
-    ).then((r) => r.blob());
+  async generatePDF(pdfName) {
     const doc = new jsPDF();
+    doc.setFont('LiberationSerif-Regular');
 
     doc.addImage(
       'https://res.cloudinary.com/diyjlmw18/image/upload/w_200,ar_16:9,c_fill,g_auto,e_sharpen/v1635186278/AplicalLTD/64227245_1023024817899638_8711578648622137344_n.jpg_qnu0co.jpg',
       'JPEG',
-      95,
-      40,
+      75,
+      10,
       0,
       0,
       { align: 'center' }
     );
-    doc.text('Hello world!', 95, 10, { align: 'center' });
-    doc.save('a4.pdf');
+    doc.text('Aplical ltd', 15, 30);
+    doc.text('ΠΟΡΤΕΣ - ΠΑΡΑΘΥΡΑ', 15, 40);
+    doc.save(`${pdfName}.pdf`);
   }
 
   render() {
@@ -385,7 +384,7 @@ class OrderDetails extends React.Component {
           <button
             type="button"
             className="btn btn-danger mx-3"
-            onClick={(e) => this.generatePDF()}
+            onClick={(e) => this.generatePDF(docName2)}
           >
             Έκδοση Αρχείου PDF <i class=" fa fa-file-pdf px-1"></i>
           </button>
