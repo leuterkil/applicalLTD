@@ -5,8 +5,8 @@ services:
     build:
       context: ./Server
       dockerfile: Dockerfile
-    image: aplical-server
-    container_name: aplical-node-server
+    image: aplical-server-original
+    container_name: aplical-node-server-original
     command: node app.js
     volumes:
       - ./Server/:/usr/src/app
@@ -34,8 +34,8 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
-    image: aplical-client
-    container_name: aplical-react-client
+    image: aplical-client-original
+    container_name: aplical-react-client-original
     command: npm start
     volumes:
       - ./client/:/usr/app
