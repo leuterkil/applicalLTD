@@ -1,9 +1,18 @@
 const Frame = require('../models/frame');
+const { cloudinary } = require('../cloudinary');
 
 module.exports.addNewFrame = async (req, res, next) => {
   try {
+    console.log(req.files);
+    console.log(req.body);
+
     const { typeOfFrame } = req.body;
     const frame = new Frame({ typeOfFrame });
+    frame.frameImage = req.files.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+
     await frame.save();
     res.json(frame);
   } catch (e) {

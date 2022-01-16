@@ -3,10 +3,18 @@ const router = express.Router();
 const frame = require('../controllers/frame');
 const { isLoggedIn, validateFrame } = require('../middleware');
 const catchAsync = require('../utils/catchAsync');
+const multer = require('multer');
+const { storage } = require('../cloudinary');
+const upload = multer({ storage });
 
 router
   .route('/new')
-  .post(isLoggedIn, validateFrame, catchAsync(frame.addNewFrame));
+  .post(
+    isLoggedIn,
+    upload.array('image'),
+    validateFrame,
+    catchAsync(frame.addNewFrame)
+  );
 router.route('/all').get(isLoggedIn, catchAsync(frame.findAllFrames));
 router
   .route('/:fid')

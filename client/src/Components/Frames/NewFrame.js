@@ -4,7 +4,7 @@ const axios = require('axios');
 class NewFrame extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { typeOfFrame: '' };
+    this.state = { typeOfFrame: '', image: '' };
   }
   onChange = (e) => {
     /*
@@ -14,15 +14,19 @@ class NewFrame extends React.Component {
     */
     this.setState({ [e.target.name]: e.target.value });
   };
+  onPhoto = (e) => {
+    this.setState({ image: e.target.files[0] });
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append('image', this.state.image);
+    formData.append('typeOfFrame', this.state.typeOfFrame);
     axios
-      .post('http://localhost:4000/frame/new', {
-        typeOfFrame: this.state.typeOfFrame,
-      })
+      .post('http://localhost:4000/frame/new', formData)
       .then((res) => {
-        console.log(res.data.errors);
+        console.log(res.data);
         this.setState({
           typeOfFrame: '',
         });
@@ -40,7 +44,7 @@ class NewFrame extends React.Component {
     return (
       <>
         <h3>Εισάγετε Στοιχεία</h3>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} encType="multipart/form-data">
           <label htmlFor="typeOfFrame" className="form-label">
             Είδος Κουφώματος
           </label>
@@ -52,6 +56,21 @@ class NewFrame extends React.Component {
             value={this.state.typeOfFrame}
             onChange={this.onChange}
           />
+          <div className="form-file custom-file">
+            <input
+              type="file"
+              className="form-file-input"
+              id="image"
+              name="image"
+              onChange={this.onPhoto}
+            />
+            <label className="form-file-label" htmlFor="image">
+              <span className="form-file-text custom-file-label">
+                Επιλέξτε Εικόνα...
+              </span>
+              <span className="form-file-button">Browse</span>
+            </label>
+          </div>
           <button type="submit" className="mt-3 btn btn-success">
             Αποθήκευση
           </button>

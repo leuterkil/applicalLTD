@@ -24,7 +24,7 @@ const PORT = process.env.PORT | 4000;
 
 //const MongoDBStore = new connectMongo(session);
 
-const dbUrl = 'mongodb://mongo:27017/applicalLTD';
+const dbUrl = 'mongodb://localhost:27017/applicalLTD';
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,
@@ -123,7 +123,7 @@ app.use(
         "'self'",
         'blob:',
         'data:',
-        'https://res.cloudinary.com/douqbebwk/', //SHOULD MATCH YOUR CLOUDINARY ACCOUNT!
+        'https://res.cloudinary.com/aplicalltd/', //SHOULD MATCH YOUR CLOUDINARY ACCOUNT!
         'https://images.unsplash.com',
       ],
       fontSrc: ["'self'", ...fontSrcUrls],

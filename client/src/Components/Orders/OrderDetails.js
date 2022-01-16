@@ -30,13 +30,26 @@ const saveDocumentToFile = (doc, fileName) => {
   });
 };
 
-const expandContent = (arr) => {
-  console.log(arr);
+const expandContent = async (arr) => {
+  const images = [];
+  for (let i = 0; i < arr.length; i++) {
+    let url = arr[i].frameDesc.frameImage[0].url;
+    let blob2 = await fetch(url).then((r) => r.blob());
+    images.push(blob2);
+  }
+
   return arr.map((item, index) => {
     return new Paragraph({
       children: [
         new TextRun({ text: index + 1, size: 30 }),
         new TextRun({ break: 2 }),
+        new ImageRun({
+          data: images[index],
+          transformation: {
+            height: 200,
+            width: 200,
+          },
+        }),
         new TextRun({
           text: `Διαστάσεις : ${item.frameHeight} X ${item.frameLength}`,
           size: 22,
@@ -46,6 +59,7 @@ const expandContent = (arr) => {
           text: `Τύπος Κουφώματος : ${item.frameDesc.typeOfFrame}`,
           size: 22,
         }),
+        ,
         new TextRun({ break: 1 }),
         new TextRun({
           text: `Ποσότητα : ${item.qty}`,
@@ -76,6 +90,7 @@ class OrderDetails extends React.Component {
       order: [],
       customer: {},
       content: [],
+      image: '',
       dateOfOrder: '',
       total: 0,
       color: '',
@@ -91,6 +106,7 @@ class OrderDetails extends React.Component {
       .then((res) => {
         const ordDate = moment(res.data.orderDate).format('LL');
         let total = 0;
+        console.log(res.data);
 
         for (let content of res.data.content) {
           total = total + content.qty * content.price;
@@ -115,159 +131,166 @@ class OrderDetails extends React.Component {
       'https://res.cloudinary.com/diyjlmw18/image/upload/w_200,ar_16:9,c_fill,g_auto,e_sharpen/v1635186278/AplicalLTD/64227245_1023024817899638_8711578648622137344_n.jpg_qnu0co.jpg'
     ).then((r) => r.blob());
 
-    const doc = new Document({
-      sections: [
-        {
-          children: [
-            new Paragraph({
-              children: [
-                new ImageRun({
-                  data: blob,
-                  transformation: {
-                    height: 100,
-                    width: 200,
-                  },
-                }),
-              ],
-              alignment: AlignmentType.CENTER,
-            }),
-            new Paragraph({
-              children: [
-                new TextRun({ text: 'Aplical ltd', size: 24, font: 'calibri' }),
-                new TextRun({ break: 1 }),
-                new TextRun({
-                  text: 'ΠΟΡΤΕΣ - ΠΑΡΑΘΥΡΑ',
-                  size: 24,
-                  font: 'calibri',
-                }),
-                new TextRun({ break: 1 }),
-                new TextRun({
-                  text: 'Al.stampolyiski 14',
-                  size: 24,
-                  font: 'calibri',
-                }),
-                new TextRun({ break: 1 }),
-                new TextRun({
-                  text: 'Petrich Bulgaria',
-                  size: 24,
-                  font: 'calibri',
-                }),
-                new TextRun({ break: 1 }),
-                new TextRun({
-                  text: 'tel: +306976843834',
-                  size: 24,
-                  font: 'calibri',
-                }),
-              ],
-            }),
-            new Paragraph({
-              text: 'ΟΙΚΟΝΟΜΟΤΕΧΝΙΚΗ ΜΕΛΕΤΗ ΚΟΥΦΩΜΑΤΩΝ',
-              heading: HeadingLevel.TITLE,
-              alignment: AlignmentType.CENTER,
-            }),
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: 'Στοιχεια Προσφοράς',
-                  color: '000000',
-                }),
-              ],
-              heading: HeadingLevel.HEADING_1,
-              alignment: AlignmentType.CENTER,
-            }),
+    await expandContent(this.state.content).then((res) => {
+      console.log(res);
+      const doc = new Document({
+        sections: [
+          {
+            children: [
+              new Paragraph({
+                children: [
+                  new ImageRun({
+                    data: blob,
+                    transformation: {
+                      height: 100,
+                      width: 200,
+                    },
+                  }),
+                ],
+                alignment: AlignmentType.CENTER,
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: 'Aplical ltd',
+                    size: 24,
+                    font: 'calibri',
+                  }),
+                  new TextRun({ break: 1 }),
+                  new TextRun({
+                    text: 'ΠΟΡΤΕΣ - ΠΑΡΑΘΥΡΑ',
+                    size: 24,
+                    font: 'calibri',
+                  }),
+                  new TextRun({ break: 1 }),
+                  new TextRun({
+                    text: 'Al.stampolyiski 14',
+                    size: 24,
+                    font: 'calibri',
+                  }),
+                  new TextRun({ break: 1 }),
+                  new TextRun({
+                    text: 'Petrich Bulgaria',
+                    size: 24,
+                    font: 'calibri',
+                  }),
+                  new TextRun({ break: 1 }),
+                  new TextRun({
+                    text: 'tel: +306976843834',
+                    size: 24,
+                    font: 'calibri',
+                  }),
+                ],
+              }),
+              new Paragraph({
+                text: 'ΟΙΚΟΝΟΜΟΤΕΧΝΙΚΗ ΜΕΛΕΤΗ ΚΟΥΦΩΜΑΤΩΝ',
+                heading: HeadingLevel.TITLE,
+                alignment: AlignmentType.CENTER,
+              }),
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: 'Στοιχεια Προσφοράς',
+                    color: '000000',
+                  }),
+                ],
+                heading: HeadingLevel.HEADING_1,
+                alignment: AlignmentType.CENTER,
+              }),
 
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: 'Ημερομηνία : ',
-                  bold: true,
-                  size: 20,
-                  font: 'calibri',
-                }),
-                new TextRun({
-                  text: `${this.state.dateOfOrder}  `,
-                  size: 20,
-                  font: 'calibri',
-                }),
-                new TextRun({ break: 1 }),
-                new TextRun({
-                  text: 'Πελάτης : ',
-                  bold: true,
-                  size: 20,
-                  font: 'calibri',
-                }),
-                new TextRun({
-                  text: `${this.state.customer.firstName} ${this.state.customer.lastName}  `,
-                  size: 20,
-                  font: 'calibri',
-                }),
-                new TextRun({ break: 1 }),
-                new TextRun({
-                  text: 'Διεύθυνση : ',
-                  bold: true,
-                  size: 20,
-                  font: 'calibri',
-                }),
-                new TextRun({
-                  text: `${this.state.order.address}  `,
-                  size: 20,
-                  font: 'calibri',
-                }),
-                new TextRun({ break: 1 }),
-                new TextRun({
-                  text: 'Τζάμι : ',
-                  bold: true,
-                  size: 20,
-                  font: 'calibri',
-                }),
-                new TextRun({
-                  text: `${this.state.windowOfFrame}  `,
-                  size: 20,
-                  font: 'calibri',
-                }),
-                new TextRun({ break: 1 }),
-                new TextRun({
-                  text: 'Χρώμα : ',
-                  bold: true,
-                  size: 20,
-                  font: 'calibri',
-                }),
-                new TextRun({
-                  text: `${this.state.color}  `,
-                  size: 20,
-                  font: 'calibri',
-                }),
-                new TextRun({ break: 1 }),
-                new TextRun({
-                  text: 'Τύπος : ',
-                  bold: true,
-                  size: 20,
-                  font: 'calibri',
-                }),
-                new TextRun({
-                  text: `${this.state.typeFrame}  `,
-                  size: 20,
-                  font: 'calibri',
-                }),
-                new TextRun({ break: 2 }),
-              ],
-            }),
-            ...expandContent(this.state.content),
-            new Paragraph({
-              children: [
-                new TextRun({
-                  text: `Σύνολο Προσφοράς : ${this.state.total}€`,
-                  color: '000000',
-                  bold: true,
-                }),
-              ],
-              heading: HeadingLevel.HEADING_2,
-            }),
-          ],
-        },
-      ],
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: 'Ημερομηνία : ',
+                    bold: true,
+                    size: 20,
+                    font: 'calibri',
+                  }),
+                  new TextRun({
+                    text: `${this.state.dateOfOrder}  `,
+                    size: 20,
+                    font: 'calibri',
+                  }),
+                  new TextRun({ break: 1 }),
+                  new TextRun({
+                    text: 'Πελάτης : ',
+                    bold: true,
+                    size: 20,
+                    font: 'calibri',
+                  }),
+                  new TextRun({
+                    text: `${this.state.customer.firstName} ${this.state.customer.lastName}  `,
+                    size: 20,
+                    font: 'calibri',
+                  }),
+                  new TextRun({ break: 1 }),
+                  new TextRun({
+                    text: 'Διεύθυνση : ',
+                    bold: true,
+                    size: 20,
+                    font: 'calibri',
+                  }),
+                  new TextRun({
+                    text: `${this.state.order.address}  `,
+                    size: 20,
+                    font: 'calibri',
+                  }),
+                  new TextRun({ break: 1 }),
+                  new TextRun({
+                    text: 'Τζάμι : ',
+                    bold: true,
+                    size: 20,
+                    font: 'calibri',
+                  }),
+                  new TextRun({
+                    text: `${this.state.windowOfFrame}  `,
+                    size: 20,
+                    font: 'calibri',
+                  }),
+                  new TextRun({ break: 1 }),
+                  new TextRun({
+                    text: 'Χρώμα : ',
+                    bold: true,
+                    size: 20,
+                    font: 'calibri',
+                  }),
+                  new TextRun({
+                    text: `${this.state.color}  `,
+                    size: 20,
+                    font: 'calibri',
+                  }),
+                  new TextRun({ break: 1 }),
+                  new TextRun({
+                    text: 'Τύπος : ',
+                    bold: true,
+                    size: 20,
+                    font: 'calibri',
+                  }),
+                  new TextRun({
+                    text: `${this.state.typeFrame}  `,
+                    size: 20,
+                    font: 'calibri',
+                  }),
+                  new TextRun({ break: 2 }),
+                ],
+              }),
+              ...res,
+              new Paragraph({
+                children: [
+                  new TextRun({
+                    text: `Σύνολο Προσφοράς : ${this.state.total}€`,
+                    color: '000000',
+                    bold: true,
+                  }),
+                ],
+                heading: HeadingLevel.HEADING_2,
+              }),
+            ],
+          },
+        ],
+      });
+      saveDocumentToFile(doc, `${docName}.docx`);
     });
-    saveDocumentToFile(doc, `${docName}.docx`);
   }
   async generatePDF(pdfName) {
     const doc = new jsPDF();
