@@ -24,7 +24,7 @@ class NewFrame extends React.Component {
     formData.append('image', this.state.image);
     formData.append('typeOfFrame', this.state.typeOfFrame);
     axios
-      .post('http://localhost:4000/frame/new', formData)
+      .post('/frame/new', formData)
       .then((res) => {
         console.log(res.data);
         this.setState({

@@ -11,13 +11,13 @@ class AllFrames extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/frame/all').then((res) => {
+    axios.get('/frame/all').then((res) => {
       this.setState({ frames: res.data });
     });
   }
 
   deleteFrame(id, e, close) {
-    axios.delete(`http://localhost:4000/frame/${id}`).then((res) => {
+    axios.delete(`/frame/${id}`).then((res) => {
       console.log(res.data);
       const el = document.querySelector(`#fid${id}`);
 

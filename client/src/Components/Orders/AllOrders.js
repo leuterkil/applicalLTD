@@ -13,7 +13,7 @@ class AllOrdersMenu extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/order/all').then((res) => {
+    axios.get('/order/all').then((res) => {
       let ordDate = [];
       for (let item of res.data) {
         ordDate.push(moment(item.orderDate).format('LL'));
@@ -27,7 +27,7 @@ class AllOrdersMenu extends React.Component {
   }
 
   deleteOrder(id, e, Close) {
-    axios.delete(`http://localhost:4000/order/${id}`).then((res) => {
+    axios.delete(`/order/${id}`).then((res) => {
       console.log(res.data);
       const el = document.querySelector(`#oid${id}`);
 

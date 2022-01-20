@@ -10,7 +10,7 @@ class Frame extends React.Component {
   componentDidMount() {
     const fid = this.props.match.params.fid;
     axios
-      .get(`http://localhost:4000/frame/${fid}`)
+      .get(`/frame/${fid}`)
       .then((res) => {
         console.log(res);
         this.setState({ frame: res.data, image: res.data.frameImage[0].url });

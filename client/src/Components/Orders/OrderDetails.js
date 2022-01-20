@@ -102,7 +102,7 @@ class OrderDetails extends React.Component {
   componentDidMount() {
     const oid = this.props.match.params.oid;
     axios
-      .get(`http://localhost:4000/order/${oid}`)
+      .get(`/order/${oid}`)
       .then((res) => {
         const ordDate = moment(res.data.orderDate).format('LL');
         let total = 0;

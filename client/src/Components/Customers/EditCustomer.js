@@ -27,7 +27,7 @@ class EditCustomer extends React.Component {
     e.preventDefault();
     const cid = this.props.match.params.cid;
     axios
-      .put(`http://localhost:4000/customer/${cid}`, {
+      .put(`/customer/${cid}`, {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         email: this.state.email,
@@ -40,7 +40,7 @@ class EditCustomer extends React.Component {
 
   componentDidMount() {
     const cid = this.props.match.params.cid;
-    axios.get(`http://localhost:4000/customer/${cid}`).then((res) => {
+    axios.get(`/customer/${cid}`).then((res) => {
       this.setState({
         firstName: res.data.firstName,
         lastName: res.data.lastName,

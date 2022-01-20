@@ -156,12 +156,12 @@ class NewOrder extends React.Component {
   };
 
   componentDidMount() {
-    axios.get('http://localhost:4000/customer/all').then((res) => {
+    axios.get('/customer/all').then((res) => {
       this.setState({
         allCustomers: res.data,
       });
     });
-    axios.get('http://localhost:4000/frame/all').then((res) => {
+    axios.get('/frame/all').then((res) => {
       this.setState({
         frame: res.data,
       });

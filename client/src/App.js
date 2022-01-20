@@ -8,8 +8,6 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 const axios = require('axios');
 axios.defaults.withCredentials = true;
 
-const serverUrl = 'http://localhost:4000';
-
 class App extends React.Component {
   constructor(props) {
     super(props);

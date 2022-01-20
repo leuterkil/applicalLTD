@@ -179,7 +179,7 @@ class EditOrder extends React.Component {
     e.preventDefault();
     const oid = this.props.match.params.oid;
     axios
-      .put(`http://localhost:4000/order/${oid}`, {
+      .put(`/order/${oid}`, {
         address: this.state.address,
         content: this.state.contentList,
         frameDesc: this.state.contentList.frameDesc,
@@ -208,7 +208,7 @@ class EditOrder extends React.Component {
   componentDidMount() {
     const oid = this.props.match.params.oid;
     let total = 0;
-    axios.get(`http://localhost:4000/order/${oid}`).then((res) => {
+    axios.get(`/order/${oid}`).then((res) => {
       res.data.content.map((item) => {
         item.frameDesc = item.frameDesc._id;
       });
@@ -227,12 +227,12 @@ class EditOrder extends React.Component {
         total,
       });
     });
-    axios.get('http://localhost:4000/customer/all').then((res) => {
+    axios.get('/customer/all').then((res) => {
       this.setState({
         allCustomers: res.data,
       });
     });
-    axios.get('http://localhost:4000/frame/all').then((res) => {
+    axios.get('/frame/all').then((res) => {
       this.setState({
         frame: res.data,
       });

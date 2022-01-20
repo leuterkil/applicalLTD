@@ -18,7 +18,7 @@ class NewCustomer extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post('http://localhost:4000/customer/new', {
+      .post('/customer/new', {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         email: this.state.email,

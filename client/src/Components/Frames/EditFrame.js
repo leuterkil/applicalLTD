@@ -23,7 +23,7 @@ class EditFrame extends React.Component {
     e.preventDefault();
     const fid = this.props.match.params.fid;
     axios
-      .put(`http://localhost:4000/frame/${fid}`, {
+      .put(`/frame/${fid}`, {
         typeOfFrame: this.state.typeOfFrame,
       })
       .then((res) => {});
@@ -31,7 +31,7 @@ class EditFrame extends React.Component {
 
   componentDidMount() {
     const fid = this.props.match.params.fid;
-    axios.get(`http://localhost:4000/frame/${fid}`).then((res) => {
+    axios.get(`/frame/${fid}`).then((res) => {
       this.setState({
         typeOfFrame: res.data.typeOfFrame,
       });

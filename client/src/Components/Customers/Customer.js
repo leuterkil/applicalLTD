@@ -12,11 +12,11 @@ class Customer extends React.Component {
   }
   componentDidMount() {
     const cid = this.props.match.params.cid;
-    axios.get(`http://localhost:4000/customer/${cid}`).then((res) => {
+    axios.get(`/customer/${cid}`).then((res) => {
       this.setState({ customer: res.data });
     });
 
-    axios.get(`http://localhost:4000/order/customer/${cid}`).then((res) => {
+    axios.get(`/order/customer/${cid}`).then((res) => {
       let ordDate = [];
       for (let item of res.data) {
         ordDate.push(moment(item.orderDate).format('LL'));

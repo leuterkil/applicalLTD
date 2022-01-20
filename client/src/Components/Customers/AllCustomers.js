@@ -12,14 +12,14 @@ class AllCustomers extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/customer/all').then((res) => {
+    axios.get('/customer/all').then((res) => {
       this.setState({ customers: res.data });
     });
   }
 
   deleteCustomer(id, e, close) {
     console.log(id);
-    axios.delete(`http://localhost:4000/customer/${id}`).then((res) => {
+    axios.delete(`/customer/${id}`).then((res) => {
       console.log(res.data);
       const el = document.querySelector(`#cid${id}`);
 
