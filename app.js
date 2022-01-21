@@ -149,11 +149,10 @@ app.use('/order', orderRoutes);
 
 app.use(express.static(path.join(__dirname, "client", "build")))
 
-
-
-
-app.get('/', (req, res) => {
-  res.send('hello');
+// ...
+// Right before your app.listen(), add this:
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 app.all('*', (req, res, next) => {
@@ -167,11 +166,7 @@ app.use((err, req, res, next) => {
 });
 
 
-// ...
-// Right before your app.listen(), add this:
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-});
+
 
 
 const port = process.env.PORT | 4000;
