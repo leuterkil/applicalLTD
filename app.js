@@ -147,6 +147,11 @@ app.use('/frame', frameRoutes);
 app.use('/customer', customerRoutes);
 app.use('/order', orderRoutes);
 
+app.use(express.static(path.join(__dirname, "client", "build")))
+
+
+
+
 app.get('/', (req, res) => {
   res.send('hello');
 });
@@ -160,6 +165,15 @@ app.use((err, req, res, next) => {
   if (!err.message) err.message = 'Oh No, Something Went Wrong!';
   res.status(statusCode);
 });
+
+
+// ...
+// Right before your app.listen(), add this:
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
+
+
 const port = process.env.PORT | 4000;
 app.listen(port, () => {
   console.log(`Server Running on port ${port}`);
