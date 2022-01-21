@@ -19,7 +19,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const cors = require('cors');
 const helmet = require('helmet');
 
-const PORT = process.env.PORT | 4000;
+
 //const connectMongo = require("connect-mongo");
 
 //const MongoDBStore = new connectMongo(session);
@@ -52,7 +52,7 @@ const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
 const app = express();
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://aplicalltd.herokuapp.com',
     methods: ['POST', 'DELETE', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
     credentials: true,
   })
@@ -160,7 +160,7 @@ app.use((err, req, res, next) => {
   if (!err.message) err.message = 'Oh No, Something Went Wrong!';
   res.status(statusCode);
 });
-
-app.listen(PORT, () => {
-  console.log(`Server Running on port ${PORT}`);
+const port = process.env.PORT | 4000;
+app.listen(port, () => {
+  console.log(`Server Running on port ${port}`);
 });
