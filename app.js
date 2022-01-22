@@ -19,7 +19,6 @@ const mongoSanitize = require('express-mongo-sanitize');
 const cors = require('cors');
 const helmet = require('helmet');
 
-
 //const connectMongo = require("connect-mongo");
 
 //const MongoDBStore = new connectMongo(session);
@@ -147,12 +146,12 @@ app.use('/frame', frameRoutes);
 app.use('/customer', customerRoutes);
 app.use('/order', orderRoutes);
 
-app.use(express.static(path.join(__dirname, "client", "build")))
+app.use(express.static(path.join(__dirname, 'client', 'build')));
 
 // ...
 // Right before your app.listen(), add this:
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 });
 
 app.all('*', (req, res, next) => {
@@ -165,11 +164,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode);
 });
 
-
-
-
-
 const port = process.env.PORT | 4000;
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server Running on port ${port}`);
 });
