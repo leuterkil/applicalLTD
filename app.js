@@ -167,6 +167,6 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 4000;
 const host = process.env.LOCAL_ADDRESS || '0.0.0.0';
 app.listen(port, host, () => {
-  const address = app.address();
-  console.log(`Server Running on port ${port} , ${address} , ${host}`);
+  //const address = app.address();
+  console.log(`Server Running on port ${port}, ${host}`);
 });
