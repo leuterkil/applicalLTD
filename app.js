@@ -164,7 +164,9 @@ app.use((err, req, res, next) => {
   res.status(statusCode);
 });
 
-const port = process.env.PORT | 4000;
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Server Running on port ${port}`);
+const port = process.env.PORT || 4000;
+const host = process.env.LOCAL_ADDRESS || '0.0.0.0';
+app.listen(port, host, () => {
+  const address = app.address();
+  console.log(`Server Running on port ${port} , ${address} , ${host}`);
 });
