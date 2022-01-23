@@ -113,7 +113,11 @@ const fontSrcUrls = [];
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: [],
+      defaultSrc: [
+        "'self'",
+        'https://ka-f.fontawesome.com',
+        'https://fonts.gstatic.com',
+      ],
       connectSrc: ["'self'", ...connectSrcUrls],
       scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
       styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
