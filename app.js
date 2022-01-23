@@ -91,12 +91,15 @@ const scriptSrcUrls = [
   'https://api.tiles.mapbox.com',
   'https://api.mapbox.com',
   'https://kit.fontawesome.com',
+  'https://ka-f.fontawesome.com/releases/v5.15.4/webfonts/',
+  'https://ka-f.fontawesome.com',
   'https://cdnjs.cloudflare.com',
   'https://cdn.jsdelivr.net',
 ];
 const styleSrcUrls = [
   'https://kit-free.fontawesome.com',
   'https://ka-f.fontawesome.com',
+  'https://ka-f.fontawesome.com/releases/v5.15.4/webfonts/',
   'https://stackpath.bootstrapcdn.com',
   'https://api.mapbox.com',
   'https://api.tiles.mapbox.com',
@@ -106,6 +109,7 @@ const styleSrcUrls = [
 const connectSrcUrls = [
   'https://api.mapbox.com',
   'https://ka-f.fontawesome.com',
+  'https://ka-f.fontawesome.com/releases/v5.15.4/webfonts/',
   'https://kit-free.fontawesome.com',
   'https://*.tiles.mapbox.com',
   'https://events.mapbox.com',
@@ -117,6 +121,7 @@ app.use(
       defaultSrc: [
         "'self'",
         'https://ka-f.fontawesome.com',
+        'https://ka-f.fontawesome.com/releases/v5.15.4/webfonts/',
         'https://kit-free.fontawesome.com',
         'https://fonts.gstatic.com',
       ],
