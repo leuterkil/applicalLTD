@@ -84,9 +84,9 @@ app.use(session(sessionConfig));
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(helmet());
+//app.use(helmet());
 
-const scriptSrcUrls = [
+/*const scriptSrcUrls = [
   'https://stackpath.bootstrapcdn.com',
   'https://api.tiles.mapbox.com',
   'https://api.mapbox.com',
@@ -142,7 +142,7 @@ app.use(
       fontSrc: ["'self'", ...fontSrcUrls],
     },
   })
-);
+);*/
 
 passport.use(new LocalStrategy(Admin.authenticate()));
 
