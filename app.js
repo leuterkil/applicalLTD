@@ -105,6 +105,7 @@ const styleSrcUrls = [
 ];
 const connectSrcUrls = [
   'https://api.mapbox.com',
+  'https://ka-f.fontawesome.com',
   'https://*.tiles.mapbox.com',
   'https://events.mapbox.com',
 ];
