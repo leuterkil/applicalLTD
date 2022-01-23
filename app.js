@@ -96,7 +96,7 @@ const scriptSrcUrls = [
 ];
 const styleSrcUrls = [
   'https://kit-free.fontawesome.com',
-  'https://ka-f.fontawesome.com/',
+  'https://ka-f.fontawesome.com',
   'https://stackpath.bootstrapcdn.com',
   'https://api.mapbox.com',
   'https://api.tiles.mapbox.com',
