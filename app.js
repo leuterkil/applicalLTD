@@ -106,6 +106,7 @@ const styleSrcUrls = [
 const connectSrcUrls = [
   'https://api.mapbox.com',
   'https://ka-f.fontawesome.com',
+  'https://kit-free.fontawesome.com',
   'https://*.tiles.mapbox.com',
   'https://events.mapbox.com',
 ];
@@ -116,6 +117,7 @@ app.use(
       defaultSrc: [
         "'self'",
         'https://ka-f.fontawesome.com',
+        'https://kit-free.fontawesome.com',
         'https://fonts.gstatic.com',
       ],
       connectSrc: ["'self'", ...connectSrcUrls],
