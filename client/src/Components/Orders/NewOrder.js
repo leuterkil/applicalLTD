@@ -201,7 +201,7 @@ class NewOrder extends React.Component {
   handleSubmit = (event) => {
     event.preventDefault();
     axios
-      .post('http://localhost:4000/order/new', {
+      .post('/order/new', {
         address: this.state.address,
         content: this.state.contentList,
         notes: this.state.notes,
